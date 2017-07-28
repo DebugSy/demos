@@ -1,12 +1,11 @@
-package com.shiy.springmvc;
+package springmvc;
 
 /**
  * Created by DebugSy on 2017/7/28.
  */
-public class Application {
+public class ApplicationTest {
 
 	public static void main(String[] args) {
-		System.out.println(1);
+		System.out.println("Test");
 	}
-
 }
