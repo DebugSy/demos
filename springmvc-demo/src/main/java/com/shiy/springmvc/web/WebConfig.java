@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebMvc   //启用Spring MVC
-@ComponentScan("spittr.web")//启动组件扫描
+@ComponentScan("com.shiy.springmvc.web")//启动组件扫描
 public class WebConfig extends WebMvcConfigurerAdapter {
 
   @Bean

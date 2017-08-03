@@ -11,8 +11,8 @@ import com.shiy.springmvc.config.RootConfig.WebPackage;
 import java.util.regex.Pattern;
 
 @Configuration
-@Import(DataConfig.class)
-@ComponentScan(basePackages={"spittr"}, 
+//@Import(DataConfig.class)
+@ComponentScan(basePackages={"com.shiy.springmvc"},
     excludeFilters={
         @Filter(type=FilterType.CUSTOM, value=WebPackage.class)
     })
