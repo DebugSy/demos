@@ -1,4 +1,4 @@
-package com.shi.java.cases01;
+package com.shi.java.cases.case01;
 
 import java.io.Serializable;
 
