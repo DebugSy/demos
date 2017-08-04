@@ -27,8 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {//简单起见
       .formLogin()//启用默认登陆页面 （难看）
         .loginPage("/login")
       .and()
-        .logout()
-          .logoutSuccessUrl("/")
+        .logout()//配置logout行为
+          .logoutSuccessUrl("/")//重定向到别的路径
+		  //.logoutUrl("/sigout") 重写默认拦截路径
       .and()
       .rememberMe()//不用每次去登陆 ：通过在cookie中存储token（默认是两周有效）
         .tokenRepository(new InMemoryTokenRepositoryImpl())
