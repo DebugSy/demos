@@ -10,7 +10,7 @@ import java.io.IOException;
 public class CloseAbleMain {
 
 	public static void main(String[] args) {
-		try(CloseAbleTest closeAbleTest = new CloseAbleTest();){
+		try(CloseAbleTest closeAbleTest = new CloseAbleTest()){
 			closeAbleTest.readFile();
 		} catch (IOException e) {
 			e.printStackTrace();
