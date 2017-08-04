@@ -4,6 +4,8 @@ import java.io.IOException;
 
 /**
  * Created by DebugSy on 2017/8/3.
+ *
+ * 	测试CloseAble接口
  */
 public class CloseAbleMain {
 

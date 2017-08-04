@@ -1,4 +1,4 @@
-package com.shi.java.cases01;
+package com.shi.java.cases.case01;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,19 +15,19 @@ public class caseMain {
 
 		//模拟分区01
 		Map<Integer,Integer> map01 = new HashMap();
-		for (int i = 1; i <= 100; i++) {
+		for (int i = 1; i <= 10; i++) {
 			map01.put(i, i * 100);
 		}
 
 		//模拟分区02
 		Map<Integer,Integer> map02 = new HashMap();
-		for (int i = 1; i <= 90; i++) {
+		for (int i = 1; i <= 2; i++) {
 			map02.put(i, i * 100);
 		}
 
 		//模拟分区03
 		Map<Integer,Integer> map03 = new HashMap();
-		for (int i = 1; i <= 110; i++) {
+		for (int i = 1; i <= 11; i++) {
 			map03.put(i, i * 100);
 		}
 
@@ -43,14 +43,15 @@ public class caseMain {
 		offsetPartitionMap.put(2, map02.size());
 		offsetPartitionMap.put(3, map03.size());
 
-//		int numDelta = 1;
+		int numDelta = 1;//这个参数用来控制当一个分区没有数据时，不去获取
 		int count = 10;//模拟将要获取的message数量
-		while( count > 0){
-//			numDelta = 0;
+		while( numDelta != 0 && count > 0){
+			numDelta = 0;
 			for (int partiton : pool.keySet()){
+				System.out.println("go into for");
 				int i = (Integer) offsetPartitionMap.get(partiton);
 				if (i > 0){
-//					numDelta++;
+					numDelta++;
 					count--;
 					if (count < 0){
 						break;
