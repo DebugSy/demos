@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-//@Repository
+@Repository
 public class JdbcSpittleRepository implements SpittleRepository {
 
   private JdbcOperations jdbc;

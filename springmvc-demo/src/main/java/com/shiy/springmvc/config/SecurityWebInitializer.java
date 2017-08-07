@@ -1,6 +1,6 @@
-package com.shiy.springmvc.config;
-
-import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
-
-public class SecurityWebInitializer extends AbstractSecurityWebApplicationInitializer {
-}
+//package com.shiy.springmvc.config;
+//
+//import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+//
+//public class SecurityWebInitializer extends AbstractSecurityWebApplicationInitializer {
+//}

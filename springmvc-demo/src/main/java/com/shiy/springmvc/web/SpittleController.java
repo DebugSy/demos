@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
-//@Controller
+@Controller
 @RequestMapping("/spittles")
 public class SpittleController {
 

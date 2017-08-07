@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-//@Repository
+@Repository
 public class JdbcSpitterRepository implements SpitterRepository {
   
   private JdbcOperations jdbc;
