@@ -6,7 +6,7 @@ package com.shi.java.JarScan;
 public class JarScanTest {
 
 	public static void main(String[] args) {
-		SpecifyPathScanningCandidateComponentProvider scan = new SpecifyPathScanningCandidateComponentProvider();
+		SpecifyPathScanningCandidateProvider scan = new SpecifyPathScanningCandidateProvider();
 		scan.findCandidateComponents("file:E:\\GitHub\\demos\\java-demo\\target\\classes\\com\\shi\\java\\JarScan");
 	}
 

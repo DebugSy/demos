@@ -3,16 +3,13 @@ package com.shi.java.JarScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
-import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ScannedGenericBeanDefinition;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
-import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.util.SystemPropertyUtils;
 
 import java.io.IOException;
@@ -22,15 +19,15 @@ import java.util.Set;
 /**
  * Created by DebugSy on 2017/8/9.
  */
-public class SpecifyPathScanningCandidateComponentProvider {
+public class SpecifyPathScanningCandidateProvider {
 
-	private final static Logger logger = LoggerFactory.getLogger(SpecifyPathScanningCandidateComponentProvider.class);
+	private final static Logger logger = LoggerFactory.getLogger(SpecifyPathScanningCandidateProvider.class);
 
 	private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
 
 	private MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(this.resourcePatternResolver);
 
-	static final String DEFAULT_RESOURCE_PATTERN = "/*.class";
+	static final String DEFAULT_RESOURCE_PATTERN = "/**/*.class";
 
 	private String resourcePattern = DEFAULT_RESOURCE_PATTERN;
 
@@ -38,7 +35,7 @@ public class SpecifyPathScanningCandidateComponentProvider {
 		Set<BeanDefinition> candidates = new LinkedHashSet<BeanDefinition>();
 		try {
 			String s = SystemPropertyUtils.resolvePlaceholders(basePackage);
-			System.out.println(SpecifyPathScanningCandidateComponentProvider.class.getResource("/"));
+			System.out.println(SpecifyPathScanningCandidateProvider.class.getResource("/"));
 			String packageSearchPath = s;
 			System.out.println(packageSearchPath + "\\*");
 			Resource[] resources = this.resourcePatternResolver.getResources(packageSearchPath + resourcePattern);

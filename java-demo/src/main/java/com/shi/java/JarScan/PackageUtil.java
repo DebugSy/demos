@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * Created by cdliujian1 on 2016/1/13.
  * 包工具，根据package路径，加载class
  */
 public class PackageUtil {
