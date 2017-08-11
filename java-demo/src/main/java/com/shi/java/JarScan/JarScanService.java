@@ -1,7 +1,7 @@
 //package com.shi.java.JarScan;
 //
 //import org.springframework.beans.factory.config.BeanDefinition;
-//import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+//import org.springframework.context.annotation.ShiyClassPathScanningCandidateComponentProvider;
 //import org.springframework.core.type.filter.AnnotationTypeFilter;
 //
 //import java.util.Set;
@@ -13,7 +13,7 @@
 //
 //	public List<FuncDesc> scan(String basePackage) throws Exception {
 //		List<FuncDesc> result = new ArrayList<FuncDesc>();
-//		ClassPathScanningCandidateComponentProvider scanningProvider = new ClassPathScanningCandidateComponentProvider(false);
+//		ShiyClassPathScanningCandidateComponentProvider scanningProvider = new ShiyClassPathScanningCandidateComponentProvider(false);
 ////		scanningProvider.addIncludeFilter(new AnnotationTypeFilter(UDF.class));//筛选
 //		Set<BeanDefinition> beans = scanningProvider.findCandidateComponents(basePackage);
 //		for (BeanDefinition bean : beans) {

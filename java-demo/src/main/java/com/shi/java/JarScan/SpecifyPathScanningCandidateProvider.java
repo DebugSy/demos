@@ -89,7 +89,7 @@ public class SpecifyPathScanningCandidateProvider {
 //
 //	private boolean isConditionMatch(MetadataReader metadataReader) {
 //		if (this.conditionEvaluator == null) {
-//			this.conditionEvaluator = new ConditionEvaluator(getRegistry(), getEnvironment(), getResourceLoader());
+//			this.conditionEvaluator = new ShiyConditionEvaluator(getRegistry(), getEnvironment(), getResourceLoader());
 //		}
 //		return !this.conditionEvaluator.shouldSkip(metadataReader.getAnnotationMetadata());
 //	}

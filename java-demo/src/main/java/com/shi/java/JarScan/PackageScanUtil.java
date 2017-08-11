@@ -4,22 +4,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.SystemPropertyUtils;
+import sun.misc.ClassLoaderUtil;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -46,20 +49,19 @@ public class PackageScanUtil {
 	 * @return
 	 */
 	public static Set<Method> findClassAllMethods(String scanPackages) {
-		ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-		MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
-//		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		//获取所有的类
 		Set<String> clazzSet = findJarsClasses(scanPackages);
 		Set<Method> methods = new HashSet<Method>();
-		//遍历类，查询相应的annotation方法
 		for (String clazz : clazzSet) {
 			try {
-				File file = new File("E:\\tmp\\jars\\grassland-cli-3.0.jar");
+				clazz = "com.shiy.test.B";
+				File file = new File("E:/tmp/jars/b-1.0-SNAPSHOT.jar");
 				URL url = file.toURI().toURL();
 				URLClassLoader loader = new URLClassLoader(new URL[]{url}, Thread.currentThread().getContextClassLoader());
-				System.out.println("clazz:" + clazz);
 				Class<?> aClass = loader.loadClass(clazz);
+				aClass.newInstance();
+				Class<?> aClass1 = Class.forName(aClass.getName());
+				System.out.println(aClass1.getName());
 				System.out.println("aClass:" + aClass.getName());
 				Set<Method> ms = findAllMethods(clazz);
 				if (ms != null && !ms.isEmpty()) {
@@ -69,67 +71,15 @@ public class PackageScanUtil {
 				ignore.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
 			}
 		}
 		return methods;
 	}
 
-	/**
-	 * 根据扫描包的,查询下面的所有类
-	 *
-	 * @param scanPackages 扫描的package路径
-	 * @return
-	 */
-	public static Set<String> findPackageClass(String scanPackages) {
-		if (StringUtils.isBlank(scanPackages)) {
-			return Collections.EMPTY_SET;
-		}
-		//验证及排重包路径,避免父子路径多次扫描
-		Set<String> packages = checkPackage(scanPackages);
-		ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-		MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(resourcePatternResolver);
-		Set<String> clazzSet = new HashSet<String>();
-		for (String basePackage : packages) {
-			if (StringUtils.isBlank(basePackage)) {
-				continue;
-			}
-			String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
-					org.springframework.util.ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage)) + "/" + DEFAULT_RESOURCE_PATTERN;
-			try {
-				Resource[] resources = resourcePatternResolver.getResources(packageSearchPath);
-				for (Resource resource : resources) {
-					//检查resource，这里的resource都是class
-					String clazz = loadClassName(metadataReaderFactory, resource);
-					clazzSet.add(clazz);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-		}
-		return clazzSet;
-	}
-
-	/**
-	 * 加载资源，根据resource获取className
-	 *
-	 * @param metadataReaderFactory spring中用来读取resource为class的工具
-	 * @param resource              这里的资源就是一个Class
-	 * @throws IOException
-	 */
-	private static String loadClassName(MetadataReaderFactory metadataReaderFactory, Resource resource) throws IOException {
-		try {
-			if (resource.isReadable()) {
-				MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
-				if (metadataReader != null) {
-					return metadataReader.getClassMetadata().getClassName();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	/**
 	 * 排重，避免多次扫描
@@ -164,16 +114,6 @@ public class PackageScanUtil {
 			methodSet.add(method);
 		}
 		return methodSet;
-	}
-
-	@UDF(name = "testUDF", fnType = "UDF", returnType = "string")
-	public void testUDF(){
-		System.out.println("udf");
-	}
-
-	@UDF(name = "testUDF1", fnType = "UDF1", returnType = "string1")
-	public void testUDF1(){
-		System.out.println("udf1");
 	}
 
 	private static Set<String> getJarAllClasses(File file){
@@ -227,6 +167,11 @@ public class PackageScanUtil {
 		Set<Method> methods = PackageScanUtil.findClassAllMethods("E:\\tmp\\jars");
 		for (Method method : methods){
 			System.out.println(method.getName());
+		}
+
+		Set<String> jarsClasses = PackageScanUtil.findJarsClasses("E:\\tmp\\jars");
+		for (String jar : jarsClasses){
+			System.out.println(jar);
 		}
 	}
 

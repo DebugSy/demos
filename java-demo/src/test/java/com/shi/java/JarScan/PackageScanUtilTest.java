@@ -1,6 +1,9 @@
 package com.shi.java.JarScan;
 
-import org.junit.jupiter.api.Test;
+
+
+
+import org.junit.Test;
 
 import java.lang.reflect.Method;
 import java.util.Enumeration;
@@ -13,16 +16,6 @@ import java.util.jar.JarFile;
  */
 public class PackageScanUtilTest {
 
-
-
-	@Test
-	public void testFindClassAllMethods(){
-		Set<Method> methods = PackageScanUtil.findClassAllMethods("E:\\tmp\\jars");
-		System.out.println("Method:");
-		for (Method method : methods){
-			System.out.println(method.getName());
-		}
-	}
 
 	@Test
 	public void testJarFile() {
@@ -43,11 +36,25 @@ public class PackageScanUtilTest {
 	}
 
 	@Test
+	public void testFindClassAllMethods(){
+		Set<Method> methods = PackageScanUtil.findClassAllMethods("E:\\tmp\\jars");
+		System.out.println("Method:");
+		for (Method method : methods){
+			System.out.println(method.getName());
+		}
+	}
+
+	@Test
 	public void testFindJarsClasses(){
 		Set<String> jars = PackageScanUtil.findJarsClasses("E:\\tmp\\jars");
 		for (String str : jars){
 			System.out.println(str);
 		}
+	}
+
+	@Test
+	public void test(){
+		System.out.println(1);
 	}
 
 }
