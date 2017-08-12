@@ -15,5 +15,6 @@
         <module>kafka-demo</module>
         <module>java-demo</module>
         <module>springmvc-demo</module>
+        <module>spring-data-demo</module>
     </modules>
 </project>
