@@ -7,7 +7,7 @@ public class MainTest {
 
 	public static void main(String[] args) {
 		ShiyAnnotationConfigApplicationContext context = new ShiyAnnotationConfigApplicationContext();
-		context.scan("E:\\tmp\\jars");
+		context.scan("D:\\tmp\\jars");
 	}
 
 }

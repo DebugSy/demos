@@ -235,6 +235,7 @@ public class ShiyClassPathScanningCandidateComponentProvider implements Environm
 	@SuppressWarnings("unchecked")
 	protected void registerDefaultFilters() {
 		this.includeFilters.add(new AnnotationTypeFilter(Component.class));
+		this.includeFilters.add(new AnnotationTypeFilter(UDF.class));
 		ClassLoader cl = org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.class.getClassLoader();
 		try {
 			this.includeFilters.add(new AnnotationTypeFilter(
@@ -284,6 +285,7 @@ public class ShiyClassPathScanningCandidateComponentProvider implements Environm
 								if (debugEnabled) {
 									logger.debug("Identified candidate component class: " + resource);
 								}
+								System.out.println("bean : " + sbd.getBeanClassName());
 								candidates.add(sbd);
 							}
 							else {
