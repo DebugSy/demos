@@ -1,21 +1,6 @@
-/*
- * Copyright 2002-2014 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.shi.java.SpringSource;
 
+import com.datapps.workflow.functions.UDF;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
@@ -41,11 +26,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,19 +72,6 @@ public class ShiyClassPathScanningCandidateComponentProvider implements Environm
 
 	private ShiyConditionEvaluator conditionEvaluator;
 
-
-	/**
-	 * Create a ShiyClassPathScanningCandidateComponentProvider with a {@link StandardEnvironment}.
-	 * @param useDefaultFilters whether to register the default filters for the
-	 * {@link Component @Component}, {@link Repository @Repository},
-	 * {@link Service @Service}, and {@link Controller @Controller}
-	 * stereotype annotations
-	 * @see #registerDefaultFilters()
-	 */
-	public ShiyClassPathScanningCandidateComponentProvider(boolean useDefaultFilters) {
-		this(useDefaultFilters, new StandardEnvironment());
-	}
-
 	/**
 	 * Create a ShiyClassPathScanningCandidateComponentProvider with the given {@link Environment}.
 	 * @param useDefaultFilters whether to register the default filters for the
@@ -141,24 +111,6 @@ public class ShiyClassPathScanningCandidateComponentProvider implements Environm
 	}
 
 	/**
-	 * Set the {@link MetadataReaderFactory} to use.
-	 * <p>Default is a {@link CachingMetadataReaderFactory} for the specified
-	 * {@linkplain #setResourceLoader resource loader}.
-	 * <p>Call this setter method <i>after</i> {@link #setResourceLoader} in order
-	 * for the given MetadataReaderFactory to override the default factory.
-	 */
-	public void setMetadataReaderFactory(MetadataReaderFactory metadataReaderFactory) {
-		this.metadataReaderFactory = metadataReaderFactory;
-	}
-
-	/**
-	 * Return the MetadataReaderFactory used by this component provider.
-	 */
-	public final MetadataReaderFactory getMetadataReaderFactory() {
-		return this.metadataReaderFactory;
-	}
-
-	/**
 	 * Set the Environment to use when resolving placeholders and evaluating
 	 * {@link  @Conditional}-annotated component classes.
 	 * <p>The default is a {@link StandardEnvironment}
@@ -182,77 +134,15 @@ public class ShiyClassPathScanningCandidateComponentProvider implements Environm
 	}
 
 	/**
-	 * Set the resource pattern to use when scanning the classpath.
-	 * This value will be appended to each base package name.
-	 * @see #findCandidateComponents(String)
-	 * @see #DEFAULT_RESOURCE_PATTERN
-	 */
-	public void setResourcePattern(String resourcePattern) {
-		Assert.notNull(resourcePattern, "'resourcePattern' must not be null");
-		this.resourcePattern = resourcePattern;
-	}
-
-	/**
 	 * Add an include type filter to the <i>end</i> of the inclusion list.
 	 */
 	public void addIncludeFilter(TypeFilter includeFilter) {
 		this.includeFilters.add(includeFilter);
 	}
 
-	/**
-	 * Add an exclude type filter to the <i>front</i> of the exclusion list.
-	 */
-	public void addExcludeFilter(TypeFilter excludeFilter) {
-		this.excludeFilters.add(0, excludeFilter);
-	}
-
-	/**
-	 * Reset the configured type filters.
-	 * @param useDefaultFilters whether to re-register the default filters for
-	 * the {@link Component @Component}, {@link Repository @Repository},
-	 * {@link Service @Service}, and {@link Controller @Controller}
-	 * stereotype annotations
-	 * @see #registerDefaultFilters()
-	 */
-	public void resetFilters(boolean useDefaultFilters) {
-		this.includeFilters.clear();
-		this.excludeFilters.clear();
-		if (useDefaultFilters) {
-			registerDefaultFilters();
-		}
-	}
-
-	/**
-	 * Register the default filter for {@link Component @Component}.
-	 * <p>This will implicitly register all annotations that have the
-	 * {@link Component @Component} meta-annotation including the
-	 * {@link Repository @Repository}, {@link Service @Service}, and
-	 * {@link Controller @Controller} stereotype annotations.
-	 * <p>Also supports Java EE 6's  and
-	 * JSR-330's  annotations, if available.
-	 *
-	 */
 	@SuppressWarnings("unchecked")
 	protected void registerDefaultFilters() {
-		this.includeFilters.add(new AnnotationTypeFilter(Component.class));
-		this.includeFilters.add(new AnnotationTypeFilter(UDF.class));
-		ClassLoader cl = org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.class.getClassLoader();
-		try {
-			this.includeFilters.add(new AnnotationTypeFilter(
-					((Class<? extends Annotation>) ClassUtils.forName("javax.annotation.ManagedBean", cl)), false));
-			logger.debug("JSR-250 'javax.annotation.ManagedBean' found and supported for component scanning");
-		}
-		catch (ClassNotFoundException ex) {
-			// JSR-250 1.1 API (as included in Java EE 6) not available - simply skip.
-		}
-		try {
-			this.includeFilters.add(new AnnotationTypeFilter(
-					((Class<? extends Annotation>) ClassUtils.forName("javax.inject.Named", cl)), false));
-			logger.debug("JSR-330 'javax.inject.Named' annotation found and supported for component scanning");
-		}
-		catch (ClassNotFoundException ex) {
-			// JSR-330 API not available - simply skip.
-		}
+		addIncludeFilter(new AnnotationTypeFilter(UDF.class));
 	}
 
 

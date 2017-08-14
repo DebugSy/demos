@@ -66,6 +66,14 @@
             <version>4.3.9.RELEASE</version>
         </dependency>
 
+        <!-->测试UDF注解而引入的grassland的包<-->
+        <dependency>
+            <groupId>com.datapps.grassland</groupId>
+            <artifactId>grassland-dataflow-spark</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <artifactId>java-demo</artifactId>
