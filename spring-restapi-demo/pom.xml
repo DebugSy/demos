@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-restapi-demo</artifactId>
+    <packaging>pom</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -20,6 +21,11 @@
             <groupId>com.datapps.grassland</groupId>
             <artifactId>grassland-server</artifactId>
             <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.security</groupId>
+            <artifactId>oauth2-client</artifactId>
+            <version>2.26-b09</version>
         </dependency>
     </dependencies>
 
