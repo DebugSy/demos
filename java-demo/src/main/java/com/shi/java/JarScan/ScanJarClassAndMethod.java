@@ -15,6 +15,11 @@ import java.util.jar.JarFile;
 
 /**
  * Created by DebugSy on 2017/8/11.
+ *
+ * 扫描jar包里面的class和method，将符合给定条件的class存入scanClazz，符合条件的method存入matchMethod中
+ *
+ * 注册筛选条件： registerMethodFilter()
+ * 				  registerClassFilter()
  */
 public class ScanJarClassAndMethod {
 
@@ -51,11 +56,11 @@ public class ScanJarClassAndMethod {
 				Class clazz = urlClassLoader.loadClass(clazzName);
 				if (match(clazz, includeClassFilter)){
 					scanClazz.add(clazz);
-				}
-				Method[] methods = clazz.getMethods();
-				for (Method method : methods) {
-					if (match(method, includeMethodFilter)) {
-						matchMethod.add(method);
+					Method[] methods = clazz.getMethods();
+					for (Method method : methods) {
+						if (match(method, includeMethodFilter)) {
+							matchMethod.add(method);
+						}
 					}
 				}
 			}

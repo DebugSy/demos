@@ -16,6 +16,9 @@
         <module>java-demo</module>
         <module>springmvc-demo</module>
         <module>spring-data-demo</module>
+        <module>spring-restapi-demo</module>
+        <module>spring-boot-demo</module>
+        <module>spring-jdbc-demo</module>
         <module>scala-demo</module>
     </modules>
 </project>
