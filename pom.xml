@@ -16,5 +16,6 @@
         <module>java-demo</module>
         <module>springmvc-demo</module>
         <module>spring-data-demo</module>
+        <module>scala-demo</module>
     </modules>
 </project>
