@@ -20,5 +20,6 @@
         <module>spring-boot-demo</module>
         <module>spring-jdbc-demo</module>
         <module>scala-demo</module>
+        <module>spark-demo</module>
     </modules>
 </project>

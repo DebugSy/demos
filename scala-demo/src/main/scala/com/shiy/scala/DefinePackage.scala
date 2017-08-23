@@ -1,5 +1,6 @@
 package com.shiy.scala
 
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -87,11 +88,24 @@ object DefinePackage{
     println(array(1))
     println(array1(1))
 
-    val arrayBuffer = new ArrayBuffer[String]()
+    val arrayBuffer = new ArrayBuffer[String]()//不定长数组
     arrayBuffer += "a"
     arrayBuffer += "b"
     println(arrayBuffer(1))
     arrayBuffer.insert(2, "c")
     println(arrayBuffer(2))
+
+    //map集合
+    val scores_unmodify = Map("Alice" -> 10, "Bob" -> 3, "Condy" -> 8)//不可变的map集合
+    val scores_modify = scala.collection.Map("Alice" -> 10, "Bob" -> 3, "Condy" -> 8)//可变的map集合
+    val scores_null = new mutable.HashMap[String, Int]()
+    println(scores_unmodify("Alice"))//获取map值
+    println(scores_unmodify.getOrElse("Bob", 0))//获取map值并给定默认值
+
+    //更新map
+//    scores_modify("Alice") = 20
+    println(scores_modify("Alice"))
+
+    scores_null("Alice") = 30
   }
 }
