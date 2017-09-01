@@ -46,7 +46,7 @@ public class KafkaConsumer_0_10 {
 		consumer.seekToEnd(Arrays.asList(topicPartition));
 		long position1 = consumer.position(topicPartition);//获取当前指针的位置
 		consumer.seek(topicPartition, position1 - count);//将指针向前移count位
-		ConsumerRecords<String, String> records = consumer.poll(100);
+		ConsumerRecords<String, String> records = consumer.poll(1000);
 		for (ConsumerRecord<String, String> record : records) {
 			System.out.printf("offset = %d, key = %s, value = %s\n", record.offset(), record.key(), record.value());
 		}
