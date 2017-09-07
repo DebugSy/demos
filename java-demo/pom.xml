@@ -110,6 +110,36 @@
             <version>2.3</version>
         </dependency>
 
+        <!-- java调用R -->
+        <dependency>
+            <groupId>com.github.lucarosellini.rJava</groupId>
+            <artifactId>JRIEngine</artifactId>
+            <version>0.9-7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.lucarosellini.rJava</groupId>
+            <artifactId>REngine</artifactId>
+            <version>0.9-7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.lucarosellini.rJava</groupId>
+            <artifactId>JRI</artifactId>
+            <version>0.9-7</version>
+        </dependency>
+
+        <!-- -->
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pig</groupId>
+            <artifactId>pig</artifactId>
+            <version>0.16.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <artifactId>java-demo</artifactId>
