@@ -20,8 +20,13 @@ class Person(var name: String, age: Int) extends People with Animal{
     println("people learning...")
   }
 
-  def see: String ={
-    ""
+  //定义函数
+  val sum = (x: Int) => {
+    var res = 0
+    for (i <- 1 to x){
+      res +=i
+    }
+    res
   }
 }
 
@@ -41,6 +46,7 @@ object Person{
     println(p.run())
     println(p.speak("hello world"))
     p.learn()
+    println(p.sum(10))
 
   }
 }
