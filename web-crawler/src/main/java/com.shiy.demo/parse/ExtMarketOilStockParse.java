@@ -8,14 +8,16 @@ import com.shiy.demo.model.ExtMarketOilStockModel;
 import com.shiy.demo.utils.HTTPUtils;
 import com.shiy.demo.utils.TimeUtils;
 import com.shiy.demo.utils.UumericalUtil;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ExtMarketOilStockParse {
 	public static List<ExtMarketOilStockModel> parseurl(String url) throws Exception {
 		List<ExtMarketOilStockModel> list = new ArrayList<ExtMarketOilStockModel>();
-		String response = HTTPUtils.getRawHtml(url);
+		String response = HTTPUtils.getRawHtml(url, 3000);
 		String html = response.toString();
 		String jsonarra = html.split("rank:")[1].split(",pages")[0];
 		String stocks[] = jsonarra.split("\",");
@@ -56,8 +58,7 @@ public class ExtMarketOilStockParse {
 				stock_max_price = Float.parseFloat(stocklist.get(i).split(",")[11]);
 				stock_min_price = Float.parseFloat(stocklist.get(i).split(",")[12]);
 				stock_fiveminuate_change = UumericalUtil.FloatTO((float) (Float.parseFloat(stocklist.get(i).split(",")[21].replace("%", "")) * 0.01), 4);
-				;
-				System.out.println(stock_fiveminuate_change);
+//				System.out.println(stock_fiveminuate_change);
 			}
 			String craw_time = TimeUtils.GetNowDate("yyyy-MM-dd HH:mm:ss");
 			ExtMarketOilStockModel model = new ExtMarketOilStockModel();

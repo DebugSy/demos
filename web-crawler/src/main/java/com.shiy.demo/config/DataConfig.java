@@ -2,6 +2,7 @@ package com.shiy.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -21,6 +22,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableJpaRepositories(basePackages = "com.shiy.demo.repository")
+@ComponentScan(basePackages = "com.shiy.demo")
 public class DataConfig {
 
 	@Bean
@@ -42,7 +44,7 @@ public class DataConfig {
 		return jpaAdapter;
 	}
 
-	@Bean(name = "entityManagerFactorya")
+	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryaaa(DataSource dataSource, JpaVendorAdapter adapter) {
 		LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
 		emfb.setDataSource(dataSource);
@@ -52,15 +54,6 @@ public class DataConfig {
 		return emfb;
 	}
 
-//	@Bean
-//	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
-//		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-//		emf.setDataSource(dataSource);
-////		emf.setPersistenceUnitName("spittr");
-//		emf.setJpaVendorAdapter(jpaVendorAdapter);
-//		emf.setPackagesToScan("com.shiy.demo.model");
-//		return emf;
-//	}
 
 //	@Bean
 //	public PersistenceAnnotationBeanPostProcessor paPostProcessor(){
