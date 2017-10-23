@@ -24,16 +24,17 @@ public class JavaWordCount {
 
 	public static void main(String[] args) {
 
+//		if (args.length <  1){
+//			throw new IllegalArgumentException("请指定读取的文件位置");
+//		}
+
 		SparkConf sparkConf = new SparkConf();
 		sparkConf.setAppName("WordCount");
 		sparkConf.setMaster("local");
 
 		JavaSparkContext sc = new JavaSparkContext(sparkConf);
 
-		if (args.length < 1){
-			throw new IllegalArgumentException("请指定读取的文件位置");
-		}
-		String filePath = args[0];
+		String filePath = "/tmp/shiy/data.csv";
 
 		JavaRDD<String> lines = sc.textFile(filePath);
 

@@ -55,10 +55,11 @@ public class JpaConfig {
         return adapter;
     }
 
-    @Bean
-    public BeanPostProcessor persistenceTranslation(){
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
+    //异常处理
+//    @Bean
+//    public BeanPostProcessor persistenceTranslation(){
+//        return new PersistenceExceptionTranslationPostProcessor();
+//    }
 
     @Configuration
     @EnableTransactionManagement
