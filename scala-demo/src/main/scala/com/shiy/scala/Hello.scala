@@ -18,7 +18,7 @@ object Hello extends App{
     println(line)
   }
 
-  //写文件
+  //写文件2
   val file = new PrintWriter("E:/tmp/data_output.txt")
   for (i <- 1 to 10) {
 //    println(i)
