@@ -21,5 +21,6 @@
         <module>scala-demo</module>
         <module>spark-demo</module>
         <module>web-crawler</module>
+        <module>yarn-demo</module>
     </modules>
 </project>
