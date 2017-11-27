@@ -22,5 +22,6 @@
         <module>spark-demo</module>
         <module>web-crawler</module>
         <module>yarn-demo</module>
+        <module>solr-demo</module>
     </modules>
 </project>
