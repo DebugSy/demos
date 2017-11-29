@@ -14,7 +14,7 @@ public class TestEntity {
 	private String name;
 
 	@Field
-	private String path;
+	private String descendent;
 
 	public int getId() {
 		return id;
@@ -32,11 +32,11 @@ public class TestEntity {
 		this.name = name;
 	}
 
-	public String getPath() {
-		return path;
+	public String getDescendent() {
+		return descendent;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setDescendent(String descendent) {
+		this.descendent = descendent;
 	}
 }

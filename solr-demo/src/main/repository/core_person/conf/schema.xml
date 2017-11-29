@@ -112,7 +112,8 @@
    -->   
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
    <field name="name" type="text_general" indexed="true" stored="true" required="true" multiValued="false" />
-   <field name="path" type="text_general" indexed="true" stored="true" required="true" multiValued="false" />
+   <field name="descendent" type="descendent_path" indexed="true" stored="true" required="true" multiValued="false" />
+   <!--<field name="ancestor" type="ancestor_path" indexed="true" stored="true" required="true" multiValued="false" />-->
    <!--<field name="tenant" type="string" indexed="true" stored="true" required="true" multiValued="false" />-->
    <!--<field name="creator" type="string" indexed="true" stored="true" required="true" multiValued="false" />-->
    <!--<field name="createTime" type="tdate" indexed="true" stored="true" required="true" multiValued="false" /> -->
@@ -519,5 +520,28 @@
                              refreshInterval: Number of minutes between each rates fetch (default: 1440, min: 60)
    -->
     <fieldType name="currency" class="solr.CurrencyField" precisionStep="8" defaultCurrency="USD" currencyConfig="currency.xml" />
+    <fieldType name="path_hierarchy" class="solr.TextField">
+        <analyzer>
+            <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
+        </analyzer>
+    </fieldType>
+
+    <fieldType name="descendent_path" class="solr.TextField">
+        <analyzer type="index">
+            <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.KeywordTokenizerFactory" />
+        </analyzer>
+    </fieldType>
+
+    <fieldType name="ancestor_path" class="solr.TextField">
+        <analyzer type="index">
+            <tokenizer class="solr.KeywordTokenizerFactory" />
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="/" />
+        </analyzer>
+    </fieldType>
 
 </schema>
