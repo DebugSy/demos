@@ -23,5 +23,6 @@
         <module>web-crawler</module>
         <module>yarn-demo</module>
         <module>solr-demo</module>
+        <module>zookeeper-demo</module>
     </modules>
 </project>
