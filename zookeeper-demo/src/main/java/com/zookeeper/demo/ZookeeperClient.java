@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by DebugSy on 2017/11/29.
@@ -40,9 +41,32 @@ public class ZookeeperClient {
 		return stat;
 	}
 
-	public void create(String path) throws KeeperException, InterruptedException {
-		String nodeCreated = zookeeper.create(path, "hellozk".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+	public String create(String path) throws KeeperException, InterruptedException {
+		String returnPath = zookeeper.create(path, "zookeeper_create_node".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+		return returnPath;
 	}
+
+	public List<String> getChildren(String path) throws KeeperException, InterruptedException {
+		List<String> children = zookeeper.getChildren(path, true);
+		return children;
+	}
+
+	public byte[] getData(String path) throws KeeperException, InterruptedException {
+		byte[] data = zookeeper.getData(path, false, null);
+		return data;
+	}
+
+	public Stat setData(String path, byte[] data, int version) throws KeeperException, InterruptedException {
+		Stat stat = zookeeper.setData(path, data, version);
+		return stat;
+	}
+
+	public void deleteZnode(String path) throws KeeperException, InterruptedException {
+		//-1 代表删除所有版本
+		zookeeper.delete(path, -1);
+	}
+
+
 
 
 }
