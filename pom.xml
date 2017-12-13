@@ -24,5 +24,6 @@
         <module>yarn-demo</module>
         <module>solr-demo</module>
         <module>zookeeper-demo</module>
+        <module>netty-demo</module>
     </modules>
 </project>
