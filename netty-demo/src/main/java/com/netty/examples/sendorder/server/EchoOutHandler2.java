@@ -1,4 +1,4 @@
-package cn.itcast_03_netty.sendorder.server;
+package com.netty.examples.sendorder.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;

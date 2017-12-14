@@ -1,4 +1,4 @@
-package cn.itcast_03_netty.sendorder.server;
+package com.netty.examples.sendorder.server;
 
 import java.util.Date;
 

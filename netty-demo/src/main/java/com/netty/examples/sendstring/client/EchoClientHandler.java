@@ -1,10 +1,9 @@
-package cn.itcast_03_netty.sendstring.client;
+package com.netty.examples.sendstring.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import cn.itcast_03_netty.sendobject.bean.Person;
 
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 	// 客户端连接服务器后被调用
@@ -19,8 +18,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
 	// • 从服务器接收到数据后调用
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg)
-			throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		System.out.println("client 读取server数据..");
 		// 服务端返回消息后
 		ByteBuf buf = (ByteBuf) msg;
@@ -28,6 +26,10 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 		buf.readBytes(req);
 		String body = new String(req, "UTF-8");
 		System.out.println("服务端数据为 :" + body);
+	}
+
+	protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
+
 	}
 
 	// • 发生异常时被调用

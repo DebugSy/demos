@@ -1,5 +1,6 @@
 package com.netty.examples.sendobject.client;
 
+import com.netty.examples.sendobject.coder.PersonEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -10,7 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
 
-import cn.itcast_03_netty.sendobject.coder.PersonEncoder;
 
 /**
  * • 连接服务器 • 写数据到服务器 • 等待接受服务器返回相同的数据 • 关闭连接

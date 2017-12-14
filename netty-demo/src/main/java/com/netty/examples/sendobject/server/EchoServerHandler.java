@@ -1,8 +1,8 @@
 package com.netty.examples.sendobject.server;
 
+import com.netty.examples.sendobject.bean.Person;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import cn.itcast_03_netty.sendobject.bean.Person;
 
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
