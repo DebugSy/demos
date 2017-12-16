@@ -1,7 +1,6 @@
-package com.netty.rpc.app;
+package com.netty.rpc.app.client;
 
 import com.netty.rpc.app.server.HelloService;
-import com.netty.rpc.app.server.HelloServiceImpl;
 import com.netty.rpc.client.RpcClient;
 import com.netty.rpc.common.RpcRequest;
 import com.netty.rpc.common.RpcResponse;
@@ -15,9 +14,11 @@ import java.util.UUID;
 
 /**
  * Created by DebugSy on 2017/12/14.
+ *
+ * 未使用代理
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = HelloServiceImpl.class)
+@ContextConfiguration(classes = config.class)
 public class HelloServiceTest {
 
 	@Test
@@ -42,7 +43,7 @@ public class HelloServiceTest {
 		RpcResponse response = client.send(request);
 		//返回信息
 		if (response.isError()) {
-			System.out.println(response.getError());
+			throw response.getError();
 		} else {
 			System.out.println(response.getResult());
 		}

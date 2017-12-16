@@ -13,6 +13,10 @@ import java.util.Map;
 
 /**
  * Created by DebugSy on 2017/12/14.
+ * 处理具体的业务调用
+ *
+ * 通过构造函数传入 handlerMap ，来调用客户端所请求的业务方法
+ * 并将业务方法返回值封装成response对象写入下一个handler（即编码handler: RpcEncoder）
  */
 public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
@@ -38,6 +42,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
 			Object result = handle(rpcRequest);
 			rpcResponse.setResult(result);
 		} catch (Exception e){
+			e.printStackTrace();
 			rpcResponse.setError(e);
 		}
 

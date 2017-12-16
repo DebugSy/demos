@@ -14,11 +14,13 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -27,10 +29,9 @@ import java.util.Map;
 /**
  * Created by DebugSy on 2017/12/14.
  */
-@EnableAutoConfiguration
+@Configuration
 @ComponentScan({
 		"com.netty.rpc.service",
-		"com.netty.rpc.annotion",
 		"com.netty.rpc.common"
 })
 @Component
@@ -43,6 +44,9 @@ public class RpcServer {
 
 	@Value("${rpc.server.port:8888}")
 	private String port;
+
+	@Autowired
+	private ContextHolder contextHolder;
 
 	@PostConstruct
 	public void init(){
@@ -59,7 +63,7 @@ public class RpcServer {
 									.pipeline()
 									.addLast(new RpcDecoder(RpcRequest.class))
 									.addLast(new RpcEncoder(RpcResponse.class))
-									.addLast(new RpcHandler(ContextHolder.getHandlerMap()));
+									.addLast(new RpcHandler(contextHolder.getHandlerMap()));
 						}
 					})
 					.option(ChannelOption.SO_BACKLOG, 128)
@@ -67,19 +71,14 @@ public class RpcServer {
 
 			ChannelFuture channelFuture = bootstrap.bind(ip, Integer.parseInt(port)).sync();
 			channelFuture.channel().closeFuture().sync();
-			LOG.info("Rpc Service Started!");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
+		LOG.info("Rpc Service Started!");
 
-	}
-
-	public static void main(String[] args) {
-		new SpringApplicationBuilder().bannerMode(Banner.Mode.OFF).profiles()
-				.sources(RpcServer.class).web(true).run(args);
 	}
 
 }

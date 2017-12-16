@@ -1,4 +1,4 @@
-package com.netty.rpc.app;
+package com.netty.rpc.app.server;
 
 /**
  * Created by DebugSy on 2017/12/14.

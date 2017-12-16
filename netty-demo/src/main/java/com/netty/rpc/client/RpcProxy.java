@@ -16,11 +16,14 @@ import java.util.UUID;
 @Component
 public class RpcProxy {
 
-	private String serverAddress;
+//	private String serverAddress;
 
-	public RpcProxy(String serverAddress) {
-		this.serverAddress = serverAddress;
-	}
+//	public RpcProxy() {
+//	}
+//
+//	public RpcProxy(String serverAddress) {
+//		this.serverAddress = serverAddress;
+//	}
 
 	/**
 	 * 创建代理
@@ -47,14 +50,14 @@ public class RpcProxy {
 //						if (serviceDiscovery != null) {
 //							serverAddress = serviceDiscovery.discover();
 //						}
-						serverAddress = "localhost:8888";
-
-						//随机获取服务的地址
-						String[] array = serverAddress.split(":");
-						String host = array[0];
-						int port = Integer.parseInt(array[1]);
+//						serverAddress = "localhost:8888";
+//
+//						//随机获取服务的地址
+//						String[] array = serverAddress.split(":");
+//						String host = array[0];
+//						int port = Integer.parseInt(array[1]);
 						//创建Netty实现的RpcClient，链接服务端
-						RpcClient client = new RpcClient(host, port);
+						RpcClient client = new RpcClient("localhost", 8888);
 						//通过netty向服务端发送请求
 						RpcResponse response = client.send(request);
 						//返回信息
