@@ -2,37 +2,37 @@
     
     <property>
       <name>hadoop.registry.rm.enabled</name>
-      <value>true</value>
-    </property>
-    
-    <property>
-      <name>hadoop.registry.zk.quorum</name>
-      <value>node3:2181,node2:2181,node1:2181</value>
-    </property>
-    
-    <property>
-      <name>yarn.acl.enable</name>
       <value>false</value>
     </property>
     
     <property>
+      <name>hadoop.registry.zk.quorum</name>
+      <value>sandbox.hortonworks.com:2181</value>
+    </property>
+    
+    <property>
+      <name>yarn.acl.enable</name>
+      <value>true</value>
+    </property>
+    
+    <property>
       <name>yarn.admin.acl</name>
-      <value>activity_analyzer,yarn</value>
+      <value>*</value>
     </property>
     
     <property>
       <name>yarn.application.classpath</name>
-      <value>/etc/hadoop/conf,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*</value>
+      <value>$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*</value>
     </property>
     
     <property>
-      <name>yarn.client.failover-proxy-provider</name>
-      <value>org.apache.hadoop.yarn.client.RequestHedgingRMFailoverProxyProvider</value>
+      <name>yarn.authorization-provider</name>
+      <value>org.apache.ranger.authorization.yarn.authorizer.RangerYarnAuthorizer</value>
     </property>
     
     <property>
       <name>yarn.client.nodemanager-connect.max-wait-ms</name>
-      <value>60000</value>
+      <value>120000</value>
     </property>
     
     <property>
@@ -57,12 +57,7 @@
     
     <property>
       <name>yarn.log.server.url</name>
-      <value>http://node2:19888/jobhistory/logs</value>
-    </property>
-    
-    <property>
-      <name>yarn.log.server.web-service.url</name>
-      <value>http://node2:8188/ws/v1/applicationhistory</value>
+      <value>http://sandbox.hortonworks.com:19888/jobhistory/logs</value>
     </property>
     
     <property>
@@ -92,7 +87,7 @@
     
     <property>
       <name>yarn.nodemanager.aux-services</name>
-      <value>mapreduce_shuffle,spark_shuffle,spark2_shuffle</value>
+      <value>mapreduce_shuffle,spark_shuffle</value>
     </property>
     
     <property>
@@ -101,23 +96,8 @@
     </property>
     
     <property>
-      <name>yarn.nodemanager.aux-services.spark2_shuffle.class</name>
-      <value>org.apache.spark.network.yarn.YarnShuffleService</value>
-    </property>
-    
-    <property>
-      <name>yarn.nodemanager.aux-services.spark2_shuffle.classpath</name>
-      <value>/usr/hdp/${hdp.version}/spark2/aux/*</value>
-    </property>
-    
-    <property>
       <name>yarn.nodemanager.aux-services.spark_shuffle.class</name>
       <value>org.apache.spark.network.yarn.YarnShuffleService</value>
-    </property>
-    
-    <property>
-      <name>yarn.nodemanager.aux-services.spark_shuffle.classpath</name>
-      <value>/usr/hdp/${hdp.version}/spark/aux/*</value>
     </property>
     
     <property>
@@ -128,11 +108,6 @@
     <property>
       <name>yarn.nodemanager.container-executor.class</name>
       <value>org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor</value>
-    </property>
-    
-    <property>
-      <name>yarn.nodemanager.container-metrics.unregister-delay-ms</name>
-      <value>60000</value>
     </property>
     
     <property>
@@ -167,17 +142,17 @@
     
     <property>
       <name>yarn.nodemanager.health-checker.script.timeout-ms</name>
-      <value>60000</value>
+      <value>120000</value>
     </property>
     
     <property>
-      <name>yarn.nodemanager.kill-escape.launch-command-line</name>
-      <value>slider-agent,LLAP</value>
+      <name>yarn.nodemanager.linux-container-executor.cgroups.hierarchy</name>
+      <value>hadoop-yarn</value>
     </property>
     
     <property>
-      <name>yarn.nodemanager.kill-escape.user</name>
-      <value>hive</value>
+      <name>yarn.nodemanager.linux-container-executor.cgroups.mount</name>
+      <value>false</value>
     </property>
     
     <property>
@@ -191,8 +166,13 @@
     </property>
     
     <property>
+      <name>yarn.nodemanager.linux-container-executor.resources-handler.class</name>
+      <value>org.apache.hadoop.yarn.server.nodemanager.util.DefaultLCEResourcesHandler</value>
+    </property>
+    
+    <property>
       <name>yarn.nodemanager.local-dirs</name>
-      <value>/hadoop/yarn/local,/data1/hadoop/yarn/local,/data2/hadoop/yarn/local,/data3/hadoop/yarn/local,/data4/hadoop/yarn/local,/data5/hadoop/yarn/local</value>
+      <value>/hadoop/yarn/local</value>
     </property>
     
     <property>
@@ -207,22 +187,27 @@
     
     <property>
       <name>yarn.nodemanager.log-aggregation.num-log-files-per-app</name>
-      <value>336</value>
+      <value>30</value>
     </property>
     
     <property>
       <name>yarn.nodemanager.log-aggregation.roll-monitoring-interval-seconds</name>
-      <value>3600</value>
+      <value>-1</value>
     </property>
     
     <property>
       <name>yarn.nodemanager.log-dirs</name>
-      <value>/hadoop/yarn/log,/data1/hadoop/yarn/log,/data2/hadoop/yarn/log,/data3/hadoop/yarn/log,/data4/hadoop/yarn/log,/data5/hadoop/yarn/log</value>
+      <value>/hadoop/yarn/log</value>
     </property>
     
     <property>
-      <name>yarn.nodemanager.log.retain-seconds</name>
+      <name>yarn.nodemanager.log.retain-second</name>
       <value>604800</value>
+    </property>
+    
+    <property>
+      <name>yarn.nodemanager.pmem-check-enabled</name>
+      <value>false</value>
     </property>
     
     <property>
@@ -247,12 +232,12 @@
     
     <property>
       <name>yarn.nodemanager.resource.cpu-vcores</name>
-      <value>9</value>
+      <value>8</value>
     </property>
     
     <property>
       <name>yarn.nodemanager.resource.memory-mb</name>
-      <value>45056</value>
+      <value>4096</value>
     </property>
     
     <property>
@@ -267,17 +252,17 @@
     
     <property>
       <name>yarn.nodemanager.vmem-pmem-ratio</name>
-      <value>2.1</value>
+      <value>10</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.address</name>
-      <value>node3:8050</value>
+      <value>sandbox.hortonworks.com:8050</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.admin.address</name>
-      <value>node3:8141</value>
+      <value>sandbox.hortonworks.com:8141</value>
     </property>
     
     <property>
@@ -292,12 +277,12 @@
     
     <property>
       <name>yarn.resourcemanager.connect.max-wait.ms</name>
-      <value>-1</value>
+      <value>900000</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.connect.retry-interval.ms</name>
-      <value>15000</value>
+      <value>30000</value>
     </property>
     
     <property>
@@ -317,17 +302,7 @@
     
     <property>
       <name>yarn.resourcemanager.hostname</name>
-      <value>node3</value>
-    </property>
-    
-    <property>
-      <name>yarn.resourcemanager.monitor.capacity.preemption.natural_termination_factor</name>
-      <value>1</value>
-    </property>
-    
-    <property>
-      <name>yarn.resourcemanager.monitor.capacity.preemption.total_preemption_per_round</name>
-      <value>0.17</value>
+      <value>sandbox.hortonworks.com</value>
     </property>
     
     <property>
@@ -342,12 +317,12 @@
     
     <property>
       <name>yarn.resourcemanager.resource-tracker.address</name>
-      <value>node3:8025</value>
+      <value>sandbox.hortonworks.com:8025</value>
     </property>
     
     <property>
       <name>yarn.resourcemanager.scheduler.address</name>
-      <value>node3:8030</value>
+      <value>sandbox.hortonworks.com:8030</value>
     </property>
     
     <property>
@@ -382,7 +357,7 @@
     
     <property>
       <name>yarn.resourcemanager.webapp.address</name>
-      <value>node3:8088</value>
+      <value>sandbox.hortonworks.com:8088</value>
     </property>
     
     <property>
@@ -392,7 +367,27 @@
     
     <property>
       <name>yarn.resourcemanager.webapp.https.address</name>
-      <value>node3:8090</value>
+      <value>sandbox.hortonworks.com:8090</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.webapp.proxyuser.hcat.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.webapp.proxyuser.hcat.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.webapp.proxyuser.oozie.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>yarn.resourcemanager.webapp.proxyuser.oozie.hosts</name>
+      <value>*</value>
     </property>
     
     <property>
@@ -412,7 +407,7 @@
     
     <property>
       <name>yarn.resourcemanager.zk-address</name>
-      <value>node3:2181,node2:2181,node1:2181</value>
+      <value>sandbox.hortonworks.com:2181</value>
     </property>
     
     <property>
@@ -436,23 +431,18 @@
     </property>
     
     <property>
-      <name>yarn.scheduler.capacity.ordering-policy.priority-utilization.underutilized-preemption.enabled</name>
-      <value>false</value>
-    </property>
-    
-    <property>
       <name>yarn.scheduler.maximum-allocation-mb</name>
-      <value>45056</value>
+      <value>4096</value>
     </property>
     
     <property>
       <name>yarn.scheduler.maximum-allocation-vcores</name>
-      <value>9</value>
+      <value>8</value>
     </property>
     
     <property>
       <name>yarn.scheduler.minimum-allocation-mb</name>
-      <value>1024</value>
+      <value>682</value>
     </property>
     
     <property>
@@ -462,17 +452,12 @@
     
     <property>
       <name>yarn.timeline-service.address</name>
-      <value>node2:10200</value>
+      <value>sandbox.hortonworks.com:10200</value>
     </property>
     
     <property>
       <name>yarn.timeline-service.bind-host</name>
       <value>0.0.0.0</value>
-    </property>
-    
-    <property>
-      <name>yarn.timeline-service.client.fd-flush-interval-secs</name>
-      <value>5</value>
     </property>
     
     <property>
@@ -496,11 +481,6 @@
     </property>
     
     <property>
-      <name>yarn.timeline-service.entity-group-fs-store.app-cache-size</name>
-      <value>10</value>
-    </property>
-    
-    <property>
       <name>yarn.timeline-service.entity-group-fs-store.cleaner-interval-seconds</name>
       <value>3600</value>
     </property>
@@ -516,18 +496,13 @@
     </property>
     
     <property>
-      <name>yarn.timeline-service.entity-group-fs-store.group-id-plugin-classpath</name>
-      <value></value>
-    </property>
-    
-    <property>
       <name>yarn.timeline-service.entity-group-fs-store.retain-seconds</name>
       <value>604800</value>
     </property>
     
     <property>
       <name>yarn.timeline-service.entity-group-fs-store.scan-interval-seconds</name>
-      <value>15</value>
+      <value>60</value>
     </property>
     
     <property>
@@ -538,16 +513,6 @@
     <property>
       <name>yarn.timeline-service.generic-application-history.store-class</name>
       <value>org.apache.hadoop.yarn.server.applicationhistoryservice.NullApplicationHistoryStore</value>
-    </property>
-    
-    <property>
-      <name>yarn.timeline-service.http-authentication.proxyuser.root.groups</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>yarn.timeline-service.http-authentication.proxyuser.root.hosts</name>
-      <value>node2</value>
     </property>
     
     <property>
@@ -591,6 +556,11 @@
     </property>
     
     <property>
+      <name>yarn.timeline-service.plugin.enabled</name>
+      <value>true</value>
+    </property>
+    
+    <property>
       <name>yarn.timeline-service.recovery.enabled</name>
       <value>true</value>
     </property>
@@ -622,12 +592,12 @@
     
     <property>
       <name>yarn.timeline-service.webapp.address</name>
-      <value>node2:8188</value>
+      <value>sandbox.hortonworks.com:8188</value>
     </property>
     
     <property>
       <name>yarn.timeline-service.webapp.https.address</name>
-      <value>node2:8190</value>
+      <value>sandbox.hortonworks.com:8190</value>
     </property>
     
   </configuration>

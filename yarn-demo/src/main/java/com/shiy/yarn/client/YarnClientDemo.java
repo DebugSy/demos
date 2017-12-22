@@ -1,4 +1,4 @@
-package com.shiy.yarn;
+package com.shiy.yarn.client;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.yarn.api.records.QueueInfo;

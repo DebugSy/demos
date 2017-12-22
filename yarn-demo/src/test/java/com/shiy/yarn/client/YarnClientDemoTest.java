@@ -1,5 +1,6 @@
-package com.shiy.yarn;
+package com.shiy.yarn.client;
 
+import com.shiy.yarn.client.YarnClientDemo;
 import org.apache.hadoop.yarn.exceptions.YarnException;
 import org.junit.Test;
 

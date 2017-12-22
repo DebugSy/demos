@@ -25,5 +25,6 @@
         <module>solr-demo</module>
         <module>zookeeper-demo</module>
         <module>netty-demo</module>
+        <module>mapreduce-demo</module>
     </modules>
 </project>
