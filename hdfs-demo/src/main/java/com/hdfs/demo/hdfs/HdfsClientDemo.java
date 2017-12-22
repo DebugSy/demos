@@ -1,4 +1,4 @@
-package com.java.demo.hdfs;
+package com.hdfs.demo.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.BlockLocation;
@@ -12,9 +12,8 @@ import org.junit.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 
-public class HdfsClient {
+public class HdfsClientDemo {
 
 	FileSystem fs = null;
 
@@ -47,9 +46,9 @@ public class HdfsClient {
 	@Test
 	public void testAddFileToHdfs() throws Exception {
 		// 要上传的文件所在的本地路径
-		Path src = new Path("E:\\tmp\\data\\data.csv");
+		Path src = new Path("src/main/resources/data.csv");
 		// 要上传到hdfs的目标路径
-		Path dst = new Path("/tmp");
+		Path dst = new Path("/tmp/shiy/hdfs-client");
 		fs.copyFromLocalFile(src, dst);
 
 		fs.close();
@@ -85,7 +84,7 @@ public class HdfsClient {
 	@Test
 	public void testListFiles() throws FileNotFoundException, IllegalArgumentException, IOException {
 		// 思考：为什么返回迭代器，而不是List之类的容器
-		RemoteIterator<LocatedFileStatus> listFiles = fs.listFiles(new Path("/"), true);
+		RemoteIterator<LocatedFileStatus> listFiles = fs.listFiles(new Path("/tmp/shiy"), true);
 
 		while (listFiles.hasNext()) {
 			LocatedFileStatus fileStatus = listFiles.next();
