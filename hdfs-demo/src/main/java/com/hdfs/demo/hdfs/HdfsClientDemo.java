@@ -37,6 +37,7 @@ public class HdfsClientDemo {
 		 fs = FileSystem.get(conf);
 
 		// 如果这样去获取，那conf里面就可以不要配"fs.defaultFS"参数，而且，这个客户端的身份标识已经是hadoop用户
+		//会去JVM找 HADOOOP_USER__NAME 参数，所以也可以在jvm里面设置-DHADOOOP_USER__NAME=hadoop
 //		fs = FileSystem.get(new URI("hdfs://192.168.112.128:8020"), conf, "hadoop");
 	}
 
