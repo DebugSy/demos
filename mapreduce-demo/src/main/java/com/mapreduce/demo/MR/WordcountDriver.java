@@ -19,8 +19,8 @@ public class WordcountDriver {
 
 		if (args == null || args.length == 0) {
 			args = new String[2];
-			args[0] = "hdfs://sandbox.hortonworks.com:8020/tmp/shiy/develop/data/wordcount.txt";
-			args[1] = "hdfs://sandbox.hortonworks.com:8020/tmp/shiy/develop/data/output";
+			args[0] = "file:///D:/tmp/data/data.csv";
+			args[1] = "file:///D:/tmp/data/output";
 		}
 
 		Configuration conf = new Configuration();
