@@ -25,6 +25,12 @@ public class FlowSumDriver {
 		job.setMapperClass(FlowSumMapper.class);
 		job.setReducerClass(FlowSumReducer.class);
 
+		//指定我们自定义的数据分区器
+		job.setPartitionerClass(FlowSumPartitioner.class);
+
+		//同时指定相应“分区”数量的reducetask
+		job.setNumReduceTasks(7);
+
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(FlowBean.class);
 
