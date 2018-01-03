@@ -26,6 +26,12 @@ public class FlowCountSortBean implements WritableComparable<FlowCountSortBean>{
 		this.sumFlow = upFlow + dFlow;
 	}
 
+	public void set(long upFlow, long dFlow) {
+		this.upFlow = upFlow;
+		this.dFlow = dFlow;
+		this.sumFlow = upFlow + dFlow;
+	}
+
 	public long getUpFlow() {
 		return upFlow;
 	}
@@ -79,6 +85,6 @@ public class FlowCountSortBean implements WritableComparable<FlowCountSortBean>{
 
 	@Override
 	public int compareTo(FlowCountSortBean o) {
-		return this.sumFlow>o.getSumFlow()?1:0;
+		return this.sumFlow>o.getSumFlow()?1:-1;
 	}
 }

@@ -18,15 +18,19 @@ import java.io.IOException;
 public class FlowCountSortApp {
 
 	static class FlowCountSortMapper extends Mapper<LongWritable, Text, FlowCountSortBean, Text> {
+
+		//mapreduce任务最好是不要一直new对象
+		FlowCountSortBean bean = new FlowCountSortBean();
+		Text v = new Text();
+
 		@Override
 		protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-			FlowCountSortBean bean = new FlowCountSortBean();
+
 			String line = value.toString();
 			String[] splits = line.split("\t");
-			bean.setUpFlow(Long.parseLong(splits[1]));
-			bean.setdFlow(Long.parseLong(splits[2]));
-			bean.setSumFlow(Long.parseLong(splits[3]));
-			context.write(bean, new Text(splits[0]));
+			bean.set(Long.parseLong(splits[1]), Long.parseLong(splits[2]));
+			v.set(splits[0]);
+			context.write(bean, v);
 		}
 	}
 
@@ -54,8 +58,8 @@ public class FlowCountSortApp {
 		job.setMapperClass(FlowCountSortMapper.class);
 		job.setReducerClass(FlowCountSortReducer.class);
 
-		FileInputFormat.setInputPaths(job, new Path("file:///E:/tmp/develop/flowsum/input/flowSort.log"));
-		FileOutputFormat.setOutputPath(job, new Path("file:///E:/tmp/develop/flowsum/sort_output2"));
+		FileInputFormat.setInputPaths(job, new Path("file:///D:/tmp/develop/flowsum/input/flow2.log"));
+		FileOutputFormat.setOutputPath(job, new Path("file:///D:/tmp/develop/flowsum/sort_output"));
 
 		boolean completion = job.waitForCompletion(true);
 		System.exit(completion?0:1);
