@@ -17,8 +17,8 @@ public class FlowSumMapper extends Mapper<LongWritable, Text, Text, FlowBean> {
 		String line = value.toString();
 		String[] splits = line.split("\t");
 		String phone = splits[1];
-		long upFlow = Long.parseLong(splits[splits.length - 2]);
-		long dFlow = Long.parseLong(splits[splits.length - 1]);
+		long upFlow = Long.parseLong(splits[splits.length - 3]);
+		long dFlow = Long.parseLong(splits[splits.length - 2]);
 		FlowBean flowBean = new FlowBean(upFlow, dFlow);
 		context.write(new Text(phone), flowBean);
 	}
