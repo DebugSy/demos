@@ -13,7 +13,6 @@ public class FlowSumMapper extends Mapper<LongWritable, Text, Text, FlowBean> {
 
 	@Override
 	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-		System.out.println("mapper key : " + key);
 		String line = value.toString();
 		String[] splits = line.split("\t");
 		String phone = splits[1];
