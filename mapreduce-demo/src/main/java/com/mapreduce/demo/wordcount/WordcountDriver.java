@@ -20,7 +20,7 @@ public class WordcountDriver {
 		if (args == null || args.length == 0) {
 			args = new String[2];
 			args[0] = "file:///E:/tmp/develop/wordcount/input/data.txt";
-			args[1] = "file:///E:/tmp/develop/wordcount/output";
+			args[1] = "file:///E:/tmp/develop/wordcount/output2";
 //			args[0] = "hdfs://sandbox.hortonworks.com:8020/tmp/shiy/develop/data/wordcount.txt";
 //			args[1] = "hdfs://sandbox.hortonworks.com:8020/tmp/shiy/develop/data/output";
 		}
@@ -43,6 +43,9 @@ public class WordcountDriver {
 		//指定最终输出数据的kv类型
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
+
+		//指定需要使用combiner，以及用哪个类作为combiner的逻辑
+		job.setCombinerClass(WordCountCombiner.class);
 
 		//指定job的原始输入文件的目录
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
