@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.CombineTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
@@ -46,6 +47,11 @@ public class WordcountDriver {
 
 		//指定需要使用combiner，以及用哪个类作为combiner的逻辑
 		job.setCombinerClass(WordCountCombiner.class);
+
+		//如果不设置InputFormat，它默认用的是TextInputformat.class,合并小文件 2m~4m
+		/*job.setInputFormatClass(CombineTextInputFormat.class);
+		CombineTextInputFormat.setMaxInputSplitSize(job, 4194304);
+		CombineTextInputFormat.setMinInputSplitSize(job, 2097152);*/
 
 		//指定job的原始输入文件的目录
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
