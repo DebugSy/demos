@@ -20,18 +20,18 @@ public class WordcountDriver {
 
 		if (args == null || args.length == 0) {
 			args = new String[2];
-			args[0] = "file:///E:/tmp/develop/wordcount/input/data.txt";
-			args[1] = "file:///E:/tmp/develop/wordcount/output2";
-//			args[0] = "hdfs://sandbox.hortonworks.com:8020/tmp/shiy/develop/data/wordcount.txt";
-//			args[1] = "hdfs://sandbox.hortonworks.com:8020/tmp/shiy/develop/data/output";
+//			args[0] = "file:///E:/tmp/develop/wordcount/input/data.txt";
+//			args[1] = "file:///E:/tmp/develop/wordcount/output2";
+			args[0] = "hdfs://sandbox.hortonworks.com:8020/tmp/develop/wordcount/input";
+			args[1] = "hdfs://sandbox.hortonworks.com:8020/tmp/develop/wordcount/output2";
 		}
 
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "WordCount");
 
 		//指定本程序的jar包所在的本地路径
-//		job.setJar("/home/hadoop/wordcount.jar");
-		job.setJarByClass(WordcountDriver.class);
+		job.setJar("mapreduce-demo/target/mapreduce-demo-1.0-SNAPSHOT.jar");
+//		job.setJarByClass(WordcountDriver.class);
 
 		//指定本业务job要使用的mapper和reducer业务类
 		job.setMapperClass(WordCountMapper.class);
