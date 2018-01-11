@@ -1,7 +1,5 @@
-package com.mapreduce.demo.commonfriends.second;
+package com.mapreduce.demo.commonfriends.secondStep;
 
-import com.mapreduce.demo.commonfriends.CmFrientsMapper;
-import com.mapreduce.demo.commonfriends.CmFrientsReducer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;

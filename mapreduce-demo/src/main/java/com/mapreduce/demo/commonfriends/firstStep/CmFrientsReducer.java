@@ -1,4 +1,4 @@
-package com.mapreduce.demo.commonfriends;
+package com.mapreduce.demo.commonfriends.firstStep;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;

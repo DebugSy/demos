@@ -1,4 +1,4 @@
-package com.mapreduce.demo.commonfriends.second;
+package com.mapreduce.demo.commonfriends.secondStep;
 
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -6,7 +6,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class FindMapper extends Mapper<LongWritable, Text, Text, Text> {
 
