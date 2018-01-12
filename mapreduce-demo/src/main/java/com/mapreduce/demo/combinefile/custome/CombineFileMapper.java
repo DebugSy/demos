@@ -1,4 +1,4 @@
-package com.mapreduce.demo.combinefile;
+package com.mapreduce.demo.combinefile.custome;
 
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.LongWritable;

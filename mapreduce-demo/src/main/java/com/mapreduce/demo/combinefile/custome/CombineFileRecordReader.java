@@ -1,4 +1,4 @@
-package com.mapreduce.demo.combinefile;
+package com.mapreduce.demo.combinefile.custome;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
