@@ -1,5 +1,7 @@
 package com.shiy.scala.demo
 
+import scala.collection.immutable.HashMap
+
 /**
   * Created by DebugSy on 2017/9/29.
   */
@@ -9,17 +11,9 @@ object SomeDemo {
 
     val map = Map("a" -> "1","b" -> "2","c" -> "3")
 
-    val name: Option[String] = map.get("a")
+    val isMap = map.isInstanceOf[Map[String, String]]
 
-    val matchResult = name match {
-      case Some(name) => {
-        println(name)
-      }
-      case None => {
-        println("None")
-      }
-    }
-
+    println(isMap)
 
 
 

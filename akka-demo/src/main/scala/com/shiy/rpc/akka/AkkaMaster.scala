@@ -1,50 +1,48 @@
-package com.shiy.rpc
+package com.shiy.rpc.akka
 
 import akka.actor.{Actor, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
 
-class Master extends Actor{
+/**
+  * Created by DebugSy on 2018/2/10.
+  */
+class AkkaMaster extends Actor{
 
-  println("constructor invoked")
+  println("connect invoked.")
+
 
   override def preStart(): Unit = {
-    println(" preStart invoked")
+    println("preStart invoked.")
   }
 
-  //用于接收消息
   override def receive: Receive = {
+
+    case "hello" => println("hello")
     case "connect" => {
-      println("a client connected.")
+      println("a client connect ")
+      sender ! "reply"
     }
-    case "hello" => {
-      println("hello")
-    }
+
   }
 
 }
-
-object Master{
+object AkkaMaster {
 
   def main(args: Array[String]): Unit = {
-
     val host = args(0)
-    val port = args(1).toInt
-    //准备配置
+    val port  = args(1).toInt
+
     val configStr =
       s"""
          |akka.actor.provider = "akka.remote.RemoteActorRefProvider"
          |akka.remote.netty.tcp.hostname = "$host"
          |akka.remote.netty.tcp.port = "$port"
        """.stripMargin
-
     val config = ConfigFactory.parseString(configStr)
-
-    val actorSystem = ActorSystem("MasterSystem", config)
-
-    //创建actor
-    val master = actorSystem.actorOf(Props[Master], "Master")
+    val acterSystem = ActorSystem.create("MasterSystem", config)
+    val master = acterSystem.actorOf(Props[AkkaMaster], "AkkaMaster")
     master ! "hello"
-    actorSystem.awaitTermination()
+    acterSystem.awaitTermination()
   }
 
 }

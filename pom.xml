@@ -12,6 +12,7 @@
 
 
     <modules>
+        <module>akka-demo</module>
         <module>kafka-demo</module>
         <module>java-demo</module>
         <module>springmvc-demo</module>

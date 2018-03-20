@@ -9,7 +9,6 @@ import org.apache.hadoop.yarn.exceptions.YarnException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -26,22 +25,44 @@ public class YarnResoureService {
 
 	private Map<String, Float> queueInfo;
 
-	@PostConstruct
+	private Map yarnMetrics;
+
 	public void init(){
 		yarnClient = YarnClient.createYarnClient();
 		YarnConfiguration conf = new YarnConfiguration();
+		conf.set("yarn.timeline-service.enabled", "false");
 		yarnClient.init(conf);
-		LOG.info("Connecting YARN to get queues info......");
-		yarnClient.start();
-		this.queueInfo = getAllQueueInfo();
-		for (String queue : queueInfo.keySet()){
-			System.out.println(queue + " : " + queueInfo.get(queue));
+		try{
+			LOG.info("Connecting YARN to get queues info......");
+			yarnClient.start();
+			this.queueInfo = getAllQueueInfo();
+			this.yarnMetrics = getYarnMetrics();
+			LOG.info("get Yarn queues info successfully.");
+			yarnClient.stop();
+		}catch (Exception e){
+			LOG.error("error message : ", e);
+			LOG.warn("use default yarn resource config");
+			this.yarnMetrics = defaultConfig();
 		}
-		LOG.info("get Yarn queues info successfully.");
-		yarnClient.stop();
 	}
 
-	public Map<String, Float> getAllQueueInfo() {
+	private Map defaultConfig(){
+		LOG.warn("Unable to connect to yarn! Perform the default configuration.");
+		LOG.warn("If you want to change the configuration, please specify the parameters[carpo.root.tenant.maxram,carpo.root.tenant.maxcpus] in the grassland-env.sh");
+		Map yarnMetrics = new HashMap();
+		String rootMaxRam = System.getProperty("carpo.root.tenant.maxram");
+		String rootMaxCpus = System.getProperty("carpo.root.tenant.maxcpus");
+		if (rootMaxRam != null && !rootMaxRam.isEmpty() && rootMaxCpus != null && !rootMaxCpus.isEmpty()){
+			yarnMetrics.put("totalMB", ResourceControlUtils.getLongFromString(rootMaxRam));
+			yarnMetrics.put("totalVirtualCores", Integer.parseInt(rootMaxCpus));
+		} else {
+			yarnMetrics.put("totalMB", 1024000);
+			yarnMetrics.put("totalVirtualCores", 1000);
+		}
+		return yarnMetrics;
+	}
+
+	private Map<String, Float> getAllQueueInfo() {
 		Map<String, Float> queueInfoMap = new HashMap<>();
 		try {
 			List<QueueInfo> allQueues = yarnClient.getAllQueues();
@@ -56,29 +77,20 @@ public class YarnResoureService {
 		return queueInfoMap;
 	}
 
-	public Map<String, Double> getQueue(String queueName){
-		Float capacityPercent = queueInfo.get(queueName);
-		Map<String, Long> yarnMetrics = getYarnMetrics();
-		long totalMB = yarnMetrics.get("totalMB");
-		long totalVirtualCores = yarnMetrics.get("totalVirtualCores");
-		Map<String, Double> queue = new HashMap<>();
-		queue.put("totalMB", Math.floor(totalMB * capacityPercent));
-		queue.put("totalVirtualCores", Math.floor(totalVirtualCores * capacityPercent));
-		return queue;
-	}
-
-	public Map getYarnMetrics(){
+	private Map getYarnMetrics(){
 		Map queueInfo = new HashMap<>();
 		try {
 			Configuration configuration = yarnClient.getConfig();
+			configuration.getValByRegex("yarn.nodemanager.resource.memory-mb");
 			long totalMemory = Long.parseLong(configuration.get("yarn.nodemanager.resource.memory-mb"));
 			int totalCpus = Integer.parseInt(configuration.get("yarn.nodemanager.resource.cpu-vcores"));
 			int numNodeManagers = 0;
 			YarnClusterMetrics yarnClusterMetrics = yarnClient.getYarnClusterMetrics();
 			numNodeManagers = yarnClusterMetrics.getNumNodeManagers();
+			LOG.info("node memory : {}, node vcores : {}, node number : {}", totalMemory, totalCpus, numNodeManagers);
 			if (numNodeManagers != 0){
-				queueInfo.put("totalMemory", totalMemory * numNodeManagers);
-				queueInfo.put("totalCpus", totalCpus * numNodeManagers);
+				queueInfo.put("totalMB", totalMemory * numNodeManagers);
+				queueInfo.put("totalVirtualCores", totalCpus * numNodeManagers);
 			} else {
 				throw new RuntimeException("can't find yarn configuration.");
 			}
@@ -90,6 +102,39 @@ public class YarnResoureService {
 			e.printStackTrace();
 		}
 		return queueInfo;
+	}
+
+	public Map<String, Long> getQueue(String queueName){
+		if (this.queueInfo == null || this.yarnMetrics == null){
+			init();
+		}
+		Float capacityPercent = this.queueInfo.get(queueName);
+		Map yarnMetrics = this.yarnMetrics;
+		long totalMB = (long) yarnMetrics.get("totalMB");
+		int totalVirtualCores = (int) yarnMetrics.get("totalVirtualCores");
+		Map<String, Long> queue = new HashMap<>();
+		queue.put("totalMB", (long) Math.round(totalMB * capacityPercent));
+		queue.put("totalVirtualCores", (long) Math.round(totalVirtualCores * capacityPercent));
+		return queue;
+	}
+
+	public Map<String, Float> getQueueInfo() {
+		if (this.queueInfo == null){
+			init();
+		}
+		return this.queueInfo;
+	}
+
+	public Map getYarnMetricsInfo(){
+		if (this.yarnMetrics == null){
+			init();
+		}
+		return this.yarnMetrics;
+	}
+
+	public static void main(String[] args) {
+		YarnResoureService yarnResoureService = new YarnResoureService();
+		yarnResoureService.init();
 	}
 
 }

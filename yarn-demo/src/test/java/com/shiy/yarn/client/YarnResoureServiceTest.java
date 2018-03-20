@@ -1,6 +1,5 @@
 package com.shiy.yarn.client;
 
-import com.shiy.yarn.client.YarnResoureService;
 import org.junit.Test;
 
 /**
