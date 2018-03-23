@@ -28,5 +28,6 @@
         <module>netty-demo</module>
         <module>mapreduce-demo</module>
         <module>hive-demo</module>
+        <module>flink-demo</module>
     </modules>
 </project>
