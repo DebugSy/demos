@@ -15,8 +15,27 @@ object Chapter2 {
     msg.format(n, abs(n))
   }
 
+  def fib(n: Int): Int = {//斐波那契数列
+
+    def fibs(m: Int, n: Int,limit: Int): Int = {
+      var r = m + n
+      if (limit == 1 ){
+        r
+      } else {
+        fibs(n, r, limit - 1)
+      }
+    }
+
+    if (n == 1)
+      0
+    else if (n == 2)
+      1
+    else
+      fibs(0, 1, n-2)//尾递归
+  }
+
   def main(args: Array[String]): Unit = {
-    println(formatAbs(-42))
+    println(fib(8))
   }
 
 }
