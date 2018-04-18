@@ -27,6 +27,7 @@ object List {
     }
   }
 
+  //练习3.10
   @annotation.tailrec
   def foldLeft[A,B](as: List[A], z: B)(f: (B,A) => B): B = {
     as match {
@@ -35,20 +36,62 @@ object List {
     }
   }
 
+  //练习3.9
   def sum2(ns: List[Int]) = foldRight(ns, 0)((x, y) => x + y)
 
   def product2(ns: List[Double]) = foldRight(ns, 1.0)(_ * _)// * _ *是(x,y)=>x*y的缩写
 
+  //练习3.11
   def sum3(ns: List[Int]) = foldLeft(ns, 0)(_ + _)
 
   def product3(ns: List[Double]) = foldLeft(ns, 1.0)(_ * _)
 
+  //练习3.9
   def length[A](l: List[A]): Int = {
     foldRight(l, 0)((_, acc) => {println(s"acc:$acc");acc + 1})
   }
 
   def length2[A](l: List[A]): Int = {
     foldLeft(l, 0)((acc, _) => acc + 1)
+  }
+
+  //练习3.12
+  def reverse[A](l: List[A]): List[A] = {
+    foldLeft(l, List[A]())( (A,B) => {println(s"$A - $B");Cons(B,A)})
+  }
+
+  //练习3.13
+  def foldLeft2[A,B](as: List[A], z: B)(f: (B,A) => B): B = {
+    foldRight(reverse(as), z)((B,A) => f(A,B))
+  }
+
+  def foldRightViaFoldLeft[A,B](as: List[A], z: B)(f: (A,B) => B): B = {
+    foldLeft(reverse(as), z)((B,A) => f(A,B))
+  }
+
+  def foldRightViaFoldLeft_1[A,B](as: List[A], z: B)(f: (A,B) => B): B = {
+    foldLeft(as, (b:B) => {println(s"wb:$b");b})((g,a) => b => g(f(a,b)))(z)
+  }
+
+  def foldLeftViaFoldRight[A,B](l: List[A], z: B)(f: (B,A) => B): B =
+    foldRight(l, (b:B) => b)((a,g) => b => g(f(b,a)))(z)
+
+
+  //练习3.5
+  def append[A](l1: List[A], l2: List[A]): List[A] = {
+    l1 match {
+      case Nil => l2
+      case Cons(h, t) => Cons(h, append(t, l2))
+    }
+  }
+
+  //练习3.14
+  def appendViaFoldRight[A](l: List[A], r: List[A]): List[A] = {
+    foldRight(l, r)(Cons(_,_))
+  }
+
+  def appendViaFoldLeft[A](l: List[A], r: List[A]): List[A] = {
+    foldLeft(reverse(l), r)((A,B) => Cons(B,A))
   }
 
   def apply[A](as: A*): List[A] = //可变参数
@@ -109,17 +152,15 @@ object List {
     }
   }
 
-  def append[A](l1: List[A], l2: List[A]): List[A] = {
-    l1 match {
-      case Nil => l2
-      case Cons(h, t) => Cons(h, append(t, l2))
-    }
-  }
-
   def main(args: Array[String]): Unit = {
-    val list = List(1,2,3,4)
-    val len = length(list)
-    println(len)
+//    val r = foldRightViaFoldLeft_1(List(1,2,3,4), 0)((A,B) => {println(s"$A + $B");A + B})
+////    val r = foldLeft(List(1,2,3,4), 0)((B,A) => {println(s"$A + $B");A + B})
+//    println(r)
+
+    val l = List(1,2,3,4)
+    val r = List(5,6,7,8)
+    val as = appendViaFoldLeft(l, r)
+    println(as)
   }
 
 }
