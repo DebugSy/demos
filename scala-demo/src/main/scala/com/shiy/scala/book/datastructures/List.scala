@@ -94,6 +94,40 @@ object List {
     foldLeft(reverse(l), r)((A,B) => Cons(B,A))
   }
 
+  //练习3.15
+  def concat[A](l: List[List[A]]): List[A] = {
+    foldRight(l, Nil:List[A])(append)
+  }
+
+  //练习3.16
+  def add1(l: List[Int]): List[Int] = {
+    foldLeft(l, Nil:List[Int])((h,t) => Cons(t+1, h))
+  }
+
+  //练习3.17
+  def double2String(l: List[Double]): List[String] = {
+    foldLeft(l, Nil:List[String])((h,t) => Cons(t.toString, h))
+  }
+
+  //练习3.18
+  def map[A,B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, Nil: List[B])( (h,t) => Cons(f(h), t))
+  }
+
+  //练习3.19
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, Nil:List[A])((h,t) => if (f(h)) Cons(h, t) else t)
+  }
+
+  //练习3.20
+  def flatMap[A,B](as: List[A])(f: A => List[B]): List[B] = {
+    concat(map(as)(f))
+  }
+
+  //练习3.21
+
+  //练习3.22
+
   def apply[A](as: A*): List[A] = //可变参数
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
@@ -157,10 +191,13 @@ object List {
 ////    val r = foldLeft(List(1,2,3,4), 0)((B,A) => {println(s"$A + $B");A + B})
 //    println(r)
 
-    val l = List(1,2,3,4)
-    val r = List(5,6,7,8)
-    val as = appendViaFoldLeft(l, r)
-    println(as)
+//    val l = List(1,2,3,4)
+//    val r = List(5,6,7,8)
+//    val as = appendViaFoldLeft(l, r)
+//    println(as)
+
+    val l = List(1.0,2,3,4)
+    println(double2String(l))
   }
 
 }
