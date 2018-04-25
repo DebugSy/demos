@@ -125,8 +125,23 @@ object List {
   }
 
   //练习3.21
+  def filterViaFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
+    flatMap(as)(a => if (f(a)) List(a) else Nil)
+  }
 
   //练习3.22
+  def addPairwise(l1: List[Int], l2: List[Int]): List[Int] = (l1,l2) match{
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h1,t1), Cons(h2,t2)) => Cons(h1+h2, addPairwise(t1,t2))
+  }
+
+  //练习3.23
+  def zipWith[A,B,C](l1: List[A], l2: List[B])(f: (A, B) => C): List[C] = (l1,l2) match{
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(h1,t1), Cons(h2,t2)) => Cons(f(h1,h2), zipWith(t1,t2)(f))
+  }
 
   def apply[A](as: A*): List[A] = //可变参数
     if (as.isEmpty) Nil
