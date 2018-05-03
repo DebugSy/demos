@@ -39,6 +39,47 @@ sealed trait Stream[+A]{
     case _ => empty
   }
 
+  def exists(p: A => Boolean): Boolean = this match {
+    case Cons(h, t) => p(h()) || t().exists(p)
+    case _ => false
+  }
+
+  def exists2(p: A => Boolean): Boolean = {
+    foldRight(false)( (a, b) => p(a) || b)
+  }
+
+  //f参数的类型声明中B类型前面的箭头表示第二个参数是传名参数，f不会对它进行求值
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+
+  //练习5.4
+  def forAll(p: A => Boolean): Boolean = {
+    foldRight(true)((a, b) => p(a) && b)
+  }
+
+  //练习5.5
+  def takeWhile2(p: A => Boolean): Stream[A] = {
+    foldRight(empty[A])((h, t) => if (p(h)) cons(h, t) else empty)
+  }
+
+  //练习5.6
+  def headOption2: Option[A] = {
+    foldRight(None: Option[A])((h, _) => Some(h))
+  }
+
+  //练习5.7
+  //练习5.8
+  //练习5.9
+  //练习5.10
+  //练习5.11
+  //练习5.12
+  //练习5.13
+  //练习5.14
+  //练习5.15
+  //练习5.16
+
 }
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
