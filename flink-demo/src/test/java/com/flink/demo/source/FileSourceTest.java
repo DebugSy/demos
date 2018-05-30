@@ -16,7 +16,7 @@ public class FileSourceTest {
 
 	private final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
 
-	private String path = "/datastream";
+	private String path = this.getClass().getResource("/datastream/").getPath();
 
 	private FileSource fileSource = new FileSource(env, path);
 
@@ -31,6 +31,7 @@ public class FileSourceTest {
 
 	/**
 	 * 测试增量读取文件及其子目录
+	 * Junit不会执行增量读取，得在main函数中写
 	 * @throws Exception
 	 */
 	@Test

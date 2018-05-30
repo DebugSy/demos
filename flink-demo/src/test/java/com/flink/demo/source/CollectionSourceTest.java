@@ -31,12 +31,12 @@ public class CollectionSourceTest {
 
 	@Test
 	public void iteratorSource() throws Exception {
-		ArrayList<Student> collection = new ArrayList<Student>();
+		List<Student> collection = new LinkedList<Student>();
 		for (int i = 0; i < 10; i++) {
 			collection.add(new Student(i, "name" + i));
 		}
-		Iterator<Student> iterator = collection.iterator();
-		collectionSource = new CollectionSource(env, iterator, Student.class);
+		Iterator<Student> it = collection.iterator();
+		collectionSource = new CollectionSource(env, it, Long.class);
 //		collectionSource = new CollectionSource(env, collection);
 		DataStreamSource streamSource = collectionSource.read();
 		streamSource.print();
@@ -44,80 +44,17 @@ public class CollectionSourceTest {
 		env.execute("iterator source");
 	}
 
-	class Student extends TypeInformation {
-
-		private static final long serialVersionUID = 1L;
-
-		private int id;
-		private String name;
-
-		public Student() {
+	@Test
+	public void iteratorLongSource() throws Exception {
+		ArrayList<Long> collection = new ArrayList<Long>();
+		for (int i = 0; i < 10; i++) {
+			collection.add(Long.valueOf(i));
 		}
+		Iterator<Long> it = collection.iterator();
+		DataStreamSource<Long> longDataStreamSource = env.fromCollection(it, Long.class);
 
-		public boolean isBasicType() {
-			return false;
-		}
-
-		public boolean isTupleType() {
-			return true;
-		}
-
-		public int getArity() {
-			return 0;
-		}
-
-		public int getTotalFields() {
-			return 0;
-		}
-
-		public Class getTypeClass() {
-			return Student.class;
-		}
-
-		public boolean isKeyType() {
-			return false;
-		}
-
-		public TypeSerializer createSerializer(ExecutionConfig config) {
-			return null;
-		}
-
-		public String toString() {
-			return null;
-		}
-
-		public boolean equals(Object obj) {
-			return false;
-		}
-
-		public int hashCode() {
-			return 0;
-		}
-
-		public boolean canEqual(Object obj) {
-			return false;
-		}
-
-		public Student(int id, String name) {
-			this.id = id;
-			this.name = name;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
+		longDataStreamSource.print();
+		env.execute("iterator source");
 	}
 
 }

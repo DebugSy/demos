@@ -29,8 +29,20 @@ public class FileSource implements Source{
 	public DataStreamSource read(FileProcessingMode mode){
 		FileInputFormat inputFormat = new TextInputFormat(null);
 		inputFormat.setNestedFileEnumeration(true);
-		DataStreamSource dataStreamSource = env.readFile(inputFormat, path, mode, 3000);
+		DataStreamSource dataStreamSource = env.readFile(inputFormat, path, mode, 1L);
 		return dataStreamSource;
+	}
+
+	public static void main(String[] args) throws Exception {
+		StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
+
+		String path = "file:///E:\\GitHub\\demos\\flink-demo\\src\\test\\resources\\datastream";
+
+		FileSource fileSource = new FileSource(env, path);
+		DataStreamSource streamSource = fileSource.read(FileProcessingMode.PROCESS_CONTINUOUSLY);
+		streamSource.print();
+
+		env.execute("read file continuously");
 	}
 
 }
