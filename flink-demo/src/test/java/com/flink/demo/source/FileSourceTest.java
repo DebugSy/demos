@@ -43,4 +43,14 @@ public class FileSourceTest {
 		env.execute("read file continuously");
 	}
 
+	@Test
+	public void testSplit(){
+		String msg = "a 1527753444";
+		String[] split = msg.split("\\s");
+		for (String str : split){
+			System.out.println(str + "&");
+		}
+
+	}
+
 }
