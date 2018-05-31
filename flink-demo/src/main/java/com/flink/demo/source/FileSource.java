@@ -33,10 +33,15 @@ public class FileSource implements Source{
 		return dataStreamSource;
 	}
 
+	/**
+	 * path不在工程内，因为编译后可能找不到文件
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
 
-		String path = "file:///E:\\GitHub\\demos\\flink-demo\\src\\test\\resources\\datastream";
+		String path = "file:///E:/tmp/flink/datastream";
 
 		FileSource fileSource = new FileSource(env, path);
 		DataStreamSource streamSource = fileSource.read(FileProcessingMode.PROCESS_CONTINUOUSLY);
