@@ -19,7 +19,7 @@ object EventTimeDemo {
 
     val result = source.flatMap(w => w.trim.split("\\s")(0))
       .map(word => (word, 1))
-      .keyBy(0)
+      .keyBy(_._1)
       .timeWindow(Time.seconds(10), Time.seconds(5))
       .allowedLateness(Time.seconds(5000))
       .sum(1)
