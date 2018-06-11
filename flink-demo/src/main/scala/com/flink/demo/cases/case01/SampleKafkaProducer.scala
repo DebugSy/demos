@@ -1,6 +1,7 @@
 package com.flink.demo.cases.case01
 
-import java.util.{Properties, Random}
+import java.text.SimpleDateFormat
+import java.util.{Date, Properties, Random}
 
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.apache.sling.commons.json.JSONObject
@@ -11,6 +12,8 @@ import org.apache.sling.commons.json.JSONObject
 class SampleKafkaProducer {
 
   var kafkaProducer: KafkaProducer[String,String] = _
+
+  private val dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
   private var pointer = -1
 
@@ -35,7 +38,8 @@ class SampleKafkaProducer {
   def produce(topic: String) = {
     val msg = prepareMessage()
     val producerRecord  = new ProducerRecord[String, String](topic, msg)
-    println(s"send message: $msg")
+    val outDate = dataFormat.format(new Date()).toString
+    println(s"$outDate : $msg")
     kafkaProducer.send(producerRecord)
   }
 
@@ -75,7 +79,7 @@ object SampleKafkaProducer{
     producer.init("localhost:9092")
     while (true){
       producer.produce("shiy01")
-      Thread.sleep(2000)
+      Thread.sleep(1000)
     }
   }
 

@@ -6,19 +6,17 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.TimeCharacteristic
-import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
+import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment, _}
 import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010
 import org.apache.flink.streaming.util.serialization.{JSONDeserializationSchema, SimpleStringSchema}
-import org.apache.flink.streaming.api.scala._
-
 /**
   * Created by DebugSy on 2018/6/8.
   */
 class FlinkKafkaSource(bootstrap: String, topic: String) {
 
-  implicit val objectNodeTypeInfo = TypeInformation.of(classOf[ObjectNode])//增加隐式转换
-  implicit val jsonNodeTypeInfo = TypeInformation.of(classOf[JsonNode])//增加隐式转换
+//  implicit val objectNodeTypeInfo = TypeInformation.of(classOf[ObjectNode])//增加隐式转换
+//  implicit val jsonNodeTypeInfo = TypeInformation.of(classOf[JsonNode])//增加隐式转换
   implicit val typeInfo = TypeInformation.of(classOf[(String,Int)])//增加隐式转换
 
   private[this] final var env: StreamExecutionEnvironment = StreamExecutionEnvironment.createLocalEnvironment()
@@ -37,8 +35,8 @@ class FlinkKafkaSource(bootstrap: String, topic: String) {
     val source: DataStream[ObjectNode] = env.addSource(kafkaSource)
       .assignTimestampsAndWatermarks(new KafkaEventTimeStampExtractor);
 
-    val counts: DataStream[(String, Int)] = source.map(record => (record.get("uid").asText(), record.get("click_count").asInt()))
-      .keyBy(x => x._1)
+    val counts: DataStream[(String, Int)] = source.map(record => Tuple2(record.get("uid").asText(), record.get("click_count").asInt()))
+      .keyBy(0)
       .timeWindow(Time.seconds(20), Time.seconds(10))
         .sum(1)
 
