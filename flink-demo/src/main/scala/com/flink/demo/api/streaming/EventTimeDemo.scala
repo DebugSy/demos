@@ -1,5 +1,7 @@
 package com.flink.demo.api.streaming
 
+import com.flink.demo.SocketWindowWordCount.WordWithCount
+import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.scala.{StreamExecutionEnvironment, _}
 import org.apache.flink.streaming.api.windowing.time.Time
@@ -10,6 +12,8 @@ import org.apache.flink.streaming.api.windowing.time.Time
 object EventTimeDemo {
 
   def main(args: Array[String]): Unit = {
+
+    implicit val wordWithCountInfo = TypeInformation.of(classOf[(Char, Int)])
 
     val env = StreamExecutionEnvironment.createLocalEnvironment()
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)

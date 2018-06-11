@@ -15,7 +15,7 @@ object SocketWindowWordCount {
 
   def main(args: Array[String]): Unit = {
 
-//    implicit val wordWithCountInfo = TypeInformation.of(classOf[WordWithCount])
+    implicit val wordWithCountInfo = TypeInformation.of(classOf[WordWithCount])
 
 //    val port: Int = try {
 //      ParameterTool.fromArgs(args).getInt("port")
