@@ -2,22 +2,20 @@ package com.flink.demo.cases.case01
 
 import java.util.Properties
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ObjectNode
-import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment, _}
 import org.apache.flink.streaming.api.windowing.time.Time
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer010
-import org.apache.flink.streaming.util.serialization.{JSONDeserializationSchema, SimpleStringSchema}
+import org.apache.flink.streaming.util.serialization.JSONDeserializationSchema
+
 /**
   * Created by DebugSy on 2018/6/8.
+  *
+  * case01:
+  * 将kafka作为source，提取记录的时间戳，统计10秒内同一个id出现的次数，时间窗口时20s
   */
 class FlinkKafkaSource(bootstrap: String, topic: String) {
-
-//  implicit val objectNodeTypeInfo = TypeInformation.of(classOf[ObjectNode])//增加隐式转换
-//  implicit val jsonNodeTypeInfo = TypeInformation.of(classOf[JsonNode])//增加隐式转换
-  implicit val typeInfo = TypeInformation.of(classOf[(String,Int)])//增加隐式转换
 
   private[this] final var env: StreamExecutionEnvironment = StreamExecutionEnvironment.createLocalEnvironment()
 
