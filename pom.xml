@@ -29,5 +29,6 @@
         <module>mapreduce-demo</module>
         <module>hive-demo</module>
         <module>flink-demo</module>
+        <module>elasticsearch-demo</module>
     </modules>
 </project>
