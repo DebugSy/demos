@@ -1,6 +1,6 @@
 package com.shiy.spring.data;
 
-import com.shiy.spring.jpa.data.CommonRepository;
+import com.shiy.spring.jpa.data.UserRepository;
 import com.shiy.spring.jpa.data.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ public class UserRepositoryTest {
 
 
     @Autowired
-    private CommonRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     public void testFindOneUser(){
@@ -24,6 +24,12 @@ public class UserRepositoryTest {
         for (User user : users){
             System.out.println(user.getId() + ":" + user.getName() + ":" + user.getAge());
         }
+    }
+
+    @Test
+    public void testFindByName(){
+        User user = userRepository.findOneByName(1, "a");
+        System.out.println(user);
     }
 
 }
