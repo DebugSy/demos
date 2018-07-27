@@ -1,7 +1,5 @@
 package com.java.demo.json;
 
-import com.datapps.carpo.common.dataflow.event.FlowEvent;
-import com.datapps.carpo.common.dataflow.event.FlowEventMixIn;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -21,7 +19,6 @@ public class JsonBuilder {
 	public JsonBuilder() {
 		mapper.setSerializationInclusion(Include.NON_NULL);
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.addMixInAnnotations(FlowEvent.class, FlowEventMixIn.class);
 	}
 
 	public JsonBuilder pretty() {

@@ -21,6 +21,7 @@
         <module>spring-boot-demo</module>
         <module>scala-demo</module>
         <module>spark-demo</module>
+        <module>hdfs-demo</module>
         <module>web-crawler</module>
         <module>yarn-demo</module>
         <module>solr-demo</module>

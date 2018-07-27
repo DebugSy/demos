@@ -1,6 +1,6 @@
 package com.java.demo.SpringSource;
 
-import com.datapps.workflow.functions.UDF;
+import com.java.demo.JarScan.UDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
