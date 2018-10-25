@@ -1,9 +1,34 @@
   <configuration>
     
     <property>
+      <name>fs.azure.user.agent.prefix</name>
+      <value>User-Agent: APN/1.0 Hortonworks/1.0 HDP/</value>
+    </property>
+    
+    <property>
       <name>fs.defaultFS</name>
-      <value>hdfs://sandbox.hortonworks.com:8020</value>
+      <value>hdfs://info1:8020</value>
       <final>true</final>
+    </property>
+    
+    <property>
+      <name>fs.s3a.fast.upload</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>fs.s3a.fast.upload.buffer</name>
+      <value>disk</value>
+    </property>
+    
+    <property>
+      <name>fs.s3a.multipart.size</name>
+      <value>67108864</value>
+    </property>
+    
+    <property>
+      <name>fs.s3a.user.agent.prefix</name>
+      <value>User-Agent: APN/1.0 Hortonworks/1.0 HDP/</value>
     </property>
     
     <property>
@@ -17,28 +42,13 @@
     </property>
     
     <property>
+      <name>hadoop.custom-extensions.root</name>
+      <value>/hdp/ext/2.6/hadoop</value>
+    </property>
+    
+    <property>
       <name>hadoop.http.authentication.simple.anonymous.allowed</name>
       <value>true</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.falcon.groups</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.falcon.hosts</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.hbase.groups</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.hbase.hosts</name>
-      <value>*</value>
     </property>
     
     <property>
@@ -48,6 +58,16 @@
     
     <property>
       <name>hadoop.proxyuser.hcat.hosts</name>
+      <value>info2</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hdfs.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hdfs.hosts</name>
       <value>*</value>
     </property>
     
@@ -58,26 +78,16 @@
     
     <property>
       <name>hadoop.proxyuser.hive.hosts</name>
+      <value>info2</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.livy.groups</name>
       <value>*</value>
     </property>
     
     <property>
-      <name>hadoop.proxyuser.hue.groups</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.hue.hosts</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.oozie.groups</name>
-      <value>*</value>
-    </property>
-    
-    <property>
-      <name>hadoop.proxyuser.oozie.hosts</name>
+      <name>hadoop.proxyuser.livy.hosts</name>
       <value>*</value>
     </property>
     
@@ -88,7 +98,7 @@
     
     <property>
       <name>hadoop.proxyuser.root.hosts</name>
-      <value>*</value>
+      <value>info1</value>
     </property>
     
     <property>
@@ -104,11 +114,6 @@
     <property>
       <name>hadoop.security.authorization</name>
       <value>false</value>
-    </property>
-    
-    <property>
-      <name>hadoop.security.key.provider.path</name>
-      <value></value>
     </property>
     
     <property>

@@ -52,7 +52,7 @@
     
     <property>
       <name>dfs.datanode.data.dir</name>
-      <value>/hadoop/hdfs/data</value>
+      <value>/hadoop/hdfs/data,/data1/hadoop/hdfs/data,/data2/hadoop/hdfs/data</value>
       <final>true</final>
     </property>
     
@@ -63,7 +63,7 @@
     
     <property>
       <name>dfs.datanode.du.reserved</name>
-      <value>1073741824</value>
+      <value>492233950208</value>
     </property>
     
     <property>
@@ -89,7 +89,7 @@
     
     <property>
       <name>dfs.datanode.max.transfer.threads</name>
-      <value>1024</value>
+      <value>16384</value>
     </property>
     
     <property>
@@ -100,11 +100,6 @@
     <property>
       <name>dfs.encrypt.data.transfer.cipher.suites</name>
       <value>AES/CTR/NoPadding</value>
-    </property>
-    
-    <property>
-      <name>dfs.encryption.key.provider.uri</name>
-      <value></value>
     </property>
     
     <property>
@@ -189,28 +184,23 @@
     
     <property>
       <name>dfs.namenode.handler.count</name>
-      <value>100</value>
+      <value>800</value>
     </property>
     
     <property>
       <name>dfs.namenode.http-address</name>
-      <value>sandbox.hortonworks.com:50070</value>
+      <value>info1:50070</value>
       <final>true</final>
     </property>
     
     <property>
       <name>dfs.namenode.https-address</name>
-      <value>sandbox.hortonworks.com:50470</value>
-    </property>
-    
-    <property>
-      <name>dfs.namenode.inode.attributes.provider.class</name>
-      <value>org.apache.ranger.authorization.hadoop.RangerHdfsAuthorizer</value>
+      <value>info1:50470</value>
     </property>
     
     <property>
       <name>dfs.namenode.name.dir</name>
-      <value>/hadoop/hdfs/namenode</value>
+      <value>/hadoop/hdfs/namenode,/data1/hadoop/hdfs/namenode,/data2/hadoop/hdfs/namenode</value>
       <final>true</final>
     </property>
     
@@ -221,17 +211,17 @@
     
     <property>
       <name>dfs.namenode.rpc-address</name>
-      <value>sandbox.hortonworks.com:8020</value>
+      <value>info1:8020</value>
     </property>
     
     <property>
       <name>dfs.namenode.safemode.threshold-pct</name>
-      <value>0.999</value>
+      <value>1</value>
     </property>
     
     <property>
       <name>dfs.namenode.secondary.http-address</name>
-      <value>sandbox.hortonworks.com:50090</value>
+      <value>info2:50090</value>
     </property>
     
     <property>
@@ -284,6 +274,16 @@
     <property>
       <name>fs.permissions.umask-mode</name>
       <value>022</value>
+    </property>
+    
+    <property>
+      <name>hadoop.caller.context.enabled</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>manage.include.files</name>
+      <value>false</value>
     </property>
     
     <property>
