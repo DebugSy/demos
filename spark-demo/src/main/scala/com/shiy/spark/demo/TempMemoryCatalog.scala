@@ -4,8 +4,8 @@ import java.util
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.catalyst.TableIdentifier
-import org.apache.spark.sql.catalyst.catalog.{CatalogStorageFormat, CatalogTable, CatalogTableType, InMemoryCatalog}
-import org.apache.spark.sql.types.DataTypes
+import org.apache.spark.sql.catalyst.catalog._
+import org.apache.spark.sql.types.{DataTypes, StructField, StructType}
 
 /**
   * Created by DebugSy on 2019/2/19.
@@ -22,12 +22,10 @@ class TempMemoryCatalog(conf: SparkConf) extends InMemoryCatalog(conf) {
     //    val tempDF = sc.createDataFrame(emptyDataFrame.rdd, structType)
     //    tempDF.createOrReplaceTempView(table)
 
-    val schema = DataTypes.createStructType(
-      Array(
-        DataTypes.createStructField("id", DataTypes.StringType, false),
-        DataTypes.createStructField("name", DataTypes.StringType, false),
-        DataTypes.createStructField("age", DataTypes.IntegerType, false)
-      )
+    val schema = StructType(
+        StructField("id", DataTypes.StringType, false) ::
+        StructField("name", DataTypes.StringType, false) ::
+        StructField("age", DataTypes.IntegerType, false) :: Nil
     )
     new CatalogTable(TableIdentifier(table, Option("")), CatalogTableType.EXTERNAL, CatalogStorageFormat.empty, schema)
   }
@@ -37,4 +35,8 @@ class TempMemoryCatalog(conf: SparkConf) extends InMemoryCatalog(conf) {
   override def functionExists(db: String, funcName: String): Boolean = {
     false
   }
+
+  override def tableExists(db: String, table: String): Boolean = false
+
+  protected override def doCreateDatabase(dbDefinition: CatalogDatabase, ignoreIfExists: Boolean): Unit = super.doCreateDatabase(dbDefinition, ignoreIfExists)
 }
